@@ -1,0 +1,14 @@
+#folders created by Quartus Prime for compilation/simulation
+/db
+/output_files
+/simulation
+
+#non-vhd files used by Quartus Prime for simulation
+*.qpf
+*.qsf
+*.qwf
+*.rpt
+*.bak
+
+#testbenches ending in _tb not to be uploaded
+*_tb.vhd
