@@ -12,6 +12,7 @@ entity adder_32_bit is
 		a_32		:	in		std_logic_vector(31 downto 0);
 		b_32		:	in		std_logic_vector(31 downto 0);
 		c_in		:	in		std_logic;
+		add		:	in		std_logic;
 		
 		-- outputs
 		sum_32	:	out	std_logic_vector(31 downto 0);
@@ -30,7 +31,7 @@ architecture adder_32_bit_arch of adder_32_bit is
 	
 begin
 	-- design implementation
-	process(a_32, b_32, c_in, c_in_padded, a_numeric, b_numeric, c_in_numeric, tmp_sum)
+	process(a_32, b_32, c_in, add, c_in_padded, a_numeric, b_numeric, c_in_numeric, tmp_sum)
 	begin
 		-- converting inputs to unsigned vectors
 		a_numeric <= unsigned(a_32);
@@ -42,7 +43,13 @@ begin
 		c_in_numeric <= unsigned(c_in_padded);
 	
 		-- temporary sum value
-		tmp_sum <= ('0' & a_numeric) + ('0' & b_numeric) + ('0' & c_in_numeric);
+		if add = '1' then
+			-- if adding then add carry-in to sum
+			tmp_sum <= ('0' & a_numeric) + ('0' & b_numeric) + ('0' & c_in_numeric);
+		else
+			-- else subtract carry-in from sum
+			tmp_sum <= ('0' & a_numeric) + ('0' & b_numeric) - ('0' & c_in_numeric);
+		end if;
 		
 		-- overflow bit is msb of tmp_sum
 		c_out <= tmp_sum(32);
