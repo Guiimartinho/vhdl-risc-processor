@@ -2,6 +2,7 @@
 /db
 /output_files
 /simulation
+/incremental_db
 
 #non-vhd files used by Quartus Prime for simulation
 *.qpf
