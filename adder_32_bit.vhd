@@ -1,4 +1,5 @@
 -- 32-bit adder circuit
+-- this circuit adds two 32-bit numbers together, and supports previous-carry addition
 -- all code (c) 2016 Jay Valentine, released under the MIT license
 
 library IEEE;
@@ -29,7 +30,7 @@ architecture adder_32_bit_arch of adder_32_bit is
 	
 begin
 	-- design implementation
-	add	:	process(a_32, b_32, c_in, c_in_padded, a_numeric, b_numeric, c_in_numeric, tmp_sum)
+	process(a_32, b_32, c_in, c_in_padded, a_numeric, b_numeric, c_in_numeric, tmp_sum)
 	begin
 		-- converting inputs to unsigned vectors
 		a_numeric <= unsigned(a_32);
@@ -47,6 +48,6 @@ begin
 		c_out <= tmp_sum(32);
 		-- sum is the other 32 bits
 		sum_32 <= std_logic_vector(tmp_sum(31 downto 0));
-	end process add;
+	end process;
 	
 end architecture adder_32_bit_arch;
