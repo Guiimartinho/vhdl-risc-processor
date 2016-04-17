@@ -46,9 +46,12 @@ begin
 		if add = '1' then
 			-- if adding then add carry-in to sum
 			tmp_sum <= ('0' & a_numeric) + ('0' & b_numeric) + ('0' & c_in_numeric);
-		else
-			-- else subtract carry-in from sum
+		elsif add = '0' then
+			-- else if subtracting then subtract carry-in from sum
 			tmp_sum <= ('0' & a_numeric) + ('0' & b_numeric) - ('0' & c_in_numeric);
+		else
+			-- else error, output is 0
+			tmp_sum <= (others => '0');
 		end if;
 		
 		-- overflow bit is msb of tmp_sum
