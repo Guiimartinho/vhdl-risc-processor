@@ -1,4 +1,4 @@
--- shifter circuit
+-- 32-bit shifter circuit
 -- this circuit performs shifts (both logical and arithmetic) on inputs
 -- all code (c) copyright 2016 Jay valentine, released under the MIT license
 
@@ -6,7 +6,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 use IEEE.NUMERIC_STD.all;
 
-entity shifter is
+entity shifter_32_bit is
 	port (
 		-- inputs
 		a_32			:	in		std_logic_vector(31 downto 0);
@@ -17,9 +17,9 @@ entity shifter is
 		result_32	:	out 	std_logic_vector(31 downto 0)
 	);
 	
-end entity shifter;
+end entity shifter_32_bit;
 
-architecture shifter_arch of shifter is
+architecture shifter_32_bit_arch of shifter_32_bit is
 	-- defining signals
 	signal a_unsigned			:	unsigned(31 downto 0);
 	signal a_signed			:	signed(31 downto 0);
@@ -70,4 +70,4 @@ begin
 		
 	end process;
 	
-end architecture shifter_arch;
+end architecture shifter_32_bit_arch;
