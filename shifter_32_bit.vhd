@@ -12,6 +12,7 @@ entity shifter_32_bit is
 		a_32			:	in		std_logic_vector(31 downto 0);
 		b_32			:	in		std_logic_vector(31 downto 0);
 		opcode		:	in		std_logic_vector(1 downto 0);
+		enable		:	in		std_logic;
 		
 		-- outputs
 		result_32	:	out 	std_logic_vector(31 downto 0)
@@ -30,42 +31,56 @@ architecture shifter_32_bit_arch of shifter_32_bit is
 	
 begin
 	-- design implementation
-	process(a_32, b_32, opcode, a_unsigned, a_signed, b_numeric, b_integer, result_unsigned, result_signed)
+	process(opcode, enable, a_32, b_32, a_unsigned, a_signed, b_numeric, b_integer, result_unsigned, result_signed)
 	begin
-		-- converting second operand to unsigned and then integer
-		b_numeric <= unsigned(b_32);
-		b_integer <= to_integer(b_numeric);
+		-- shifter enabled, perform specified shift function
+		if enable = '1' then
+			-- converting second operand to unsigned and then integer
+			b_numeric <= unsigned(b_32);
+			b_integer <= to_integer(b_numeric);
 		
-		-- if performing logical shift then a needs to be unsigned
-		a_unsigned <= unsigned(a_32);
-		-- if performing arithmetic shift then a needs to be signed
-		a_signed <= signed(a_32);
+			-- if performing logical shift then a needs to be unsigned
+			a_unsigned <= unsigned(a_32);
+			-- if performing arithmetic shift then a needs to be signed
+			a_signed <= signed(a_32);
 	
-		-- opcode 00 is shift left logical
-		if opcode = "00" then
-			result_unsigned <= shift_left(a_unsigned, b_integer);
-			result_signed <= (others => '0');
-		-- opcode 01 is shift right logical
-		elsif opcode = "01" then
-			result_unsigned <= shift_right(a_unsigned, b_integer);
-			result_signed <= (others => '0');
-		-- opcode 10 is shift right arithmetic
-		-- shift left arithmetic is the same as logical so a fourth state is not needed
-		elsif opcode = "10" then
-			result_signed <= shift_right(a_signed, b_integer);
-			result_unsigned <= (others => '0');
-		-- any other opcode gives result 0
-		else
-			result_signed <= (others => '0');
-			result_unsigned <= (others => '0');
-		end if;
-		
-		if opcode(1) = '0' then
-			result_32 <= std_logic_vector(result_unsigned);
-		elsif opcode(1) = '1' then
-			result_32 <= std_logic_vector(result_signed);
+			-- opcode 00 is shift left logical
+			if opcode = "00" then
+				result_unsigned <= shift_left(a_unsigned, b_integer);
+				result_signed <= (others => '0');
+			-- opcode 01 is shift right logical
+			elsif opcode = "01" then
+				result_unsigned <= shift_right(a_unsigned, b_integer);
+				result_signed <= (others => '0');
+			-- opcode 10 is shift right arithmetic
+			-- shift left arithmetic is the same as logical so a fourth state is not needed
+			elsif opcode = "10" then
+				result_signed <= shift_right(a_signed, b_integer);
+				result_unsigned <= (others => '0');
+			-- any other opcode gives result 0
+			else
+				result_signed <= (others => '0');
+				result_unsigned <= (others => '0');
+			end if;
+			
+			if opcode(1) = '0' then
+				result_32 <= std_logic_vector(result_unsigned);
+			elsif opcode(1) = '1' then
+				result_32 <= std_logic_vector(result_signed);
+			else
+				result_32 <= (others => '0');
+			end if;
+		-- shifter disabled, all outputs and signals 0
 		else
 			result_32 <= (others => '0');
+			
+			a_unsigned <= (others => '0');
+			a_signed <= (others => '0');
+			b_numeric <= (others => '0');
+			b_integer <= 0;
+			
+			result_unsigned <= (others => '0');
+			result_signed <= (others => '0');
 		end if;
 		
 	end process;
