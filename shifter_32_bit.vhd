@@ -31,7 +31,7 @@ architecture shifter_32_bit_arch of shifter_32_bit is
 	
 begin
 	-- design implementation
-	process(opcode, enable, a_32, b_32, a_unsigned, a_signed, b_numeric, b_integer, result_unsigned, result_signed)
+	shift	:	process(opcode, enable, a_32, b_32, a_unsigned, a_signed, b_numeric, b_integer, result_unsigned, result_signed)
 	begin
 		-- shifter enabled, perform specified shift function
 		if enable = '1' then
@@ -83,6 +83,6 @@ begin
 			result_signed <= (others => '0');
 		end if;
 		
-	end process;
+	end process shift;
 	
 end architecture shifter_32_bit_arch;

@@ -31,7 +31,7 @@ architecture adder_32_bit_arch of adder_32_bit is
 	
 begin
 	-- design implementation
-	process(enable, opcode, a_32, b_32, c_in, a_numeric, b_numeric, c_numeric, tmp_sum)
+	add	:	process(enable, opcode, a_32, b_32, c_in, a_numeric, b_numeric, c_numeric, tmp_sum)
 	begin
 		if enable = '1' then
 			-- converting inputs to unsigned vectors
@@ -75,6 +75,6 @@ begin
 			c_out <= '0';
 			sum_32 <= (others => '0');
 		end if;
-	end process;
+	end process add;
 	
 end architecture adder_32_bit_arch;

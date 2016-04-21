@@ -23,7 +23,7 @@ architecture logic_32_bit_arch of logic_32_bit is
 	-- this circuit doesn't require any internal signals
 	
 begin
-	process(enable, opcode, a_32, b_32)
+	logic	:	process(enable, opcode, a_32, b_32)
 	begin
 		-- if logic block has been enabled
 		if enable = '1' then
@@ -47,7 +47,7 @@ begin
 		else
 			result_32 <= (others => '0');
 		end if;
-	end process;
+	end process logic;
 
 end architecture logic_32_bit_arch;
 				
