@@ -62,6 +62,11 @@ begin
 				else
 					result <= '0';
 				end if;
+			-- else invalid opcode, all outputs 0
+			else
+				a_numeric <= (others => '0');
+				b_numeric <= (others => '0');
+				result <= '0';
 			end if;
 		-- otherwise test block disabled, all outputs 0
 		else
