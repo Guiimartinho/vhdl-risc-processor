@@ -68,3 +68,18 @@ architecture alu_32_bit_arch of alu_32_bit is;
 			carry_select	:	out	std_logic
 		);
 	end component;
+	
+	-- 2-input mux component
+	component mux_2_32_bit is
+		port (
+			-- inputs
+			in_32_1			:	in		std_logic_vector(31 downto 0);
+			in_32_2			:	in		std_logic_vector(31 downto 0);
+			
+			-- select signal
+			input_select	:	in		std_logic;
+			
+			-- output
+			out_32			:	out	std_logic_vector(31 downto 0)
+		);
+	end component;
