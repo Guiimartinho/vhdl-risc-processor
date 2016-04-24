@@ -46,3 +46,5 @@ BRT	- offset	- pc <= pc + offset if test=1, pc otherwise
 CALL	- offset	- stack[top] <= pc + 4, pc <= pc + offset
 RET	-		- pc <= stack[top]
 
+CALLB	- block		- stack[top] <= pc + 4, pc <= block * 512
+
