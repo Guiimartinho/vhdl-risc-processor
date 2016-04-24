@@ -36,62 +36,74 @@ begin
 	-- design implementation
 	alu_control		:	process(enable, opcode_in)
 	begin
-		-- opcode 00xx is adder functions
-		if opcode_in(3 downto 2) = "00" then
-			-- adder enable line is 1, all other lines 0
-			adder_enable <= '1';
-			shifter_enable <= '0';
-			logic_enable <= '0';
-			tester_enable <= '0';
+		if enable = '1' then
+			-- opcode 00xx is adder functions
+			if opcode_in(3 downto 2) = "00" then
+				-- adder enable line is 1, all other lines 0
+				adder_enable <= '1';
+				shifter_enable <= '0';
+				logic_enable <= '0';
+				tester_enable <= '0';
+				
+				-- select adder result, select carry result, select 0 for test
+				result_select <= "00";
+				carry_select <= '1';
+				test_select <= '0';
+				
+			-- opcode 01xx is shifter functions
+			elsif opcode_in(3 downto 2) = "01" then
+				-- shifter enable line is 1, all other lines 0
+				adder_enable <= '0';
+				shifter_enable <= '1';
+				logic_enable <= '0';
+				tester_enable <= '0';
+				
+				-- select shifter result, select 0 for carry and test
+				result_select <= "01";
+				carry_select <= '0';
+				test_select <= '0';
+				
+			-- opcode 10xx is logic functions
+			elsif opcode_in(3 downto 2) = "10" then
+				-- logic enable line is 1, all other lines 0
+				adder_enable <= '0';
+				shifter_enable <= '0';
+				logic_enable <= '1';
+				tester_enable <= '0';
+				
+				-- select logic result, select 0 for carry and test
+				result_select <= "10";
+				carry_select <= '0';
+				test_select <= '0';
+				
+			-- opcode 11xx is test functions
+			elsif opcode_in(3 downto 2) = "11" then
+				-- tester enable line is 1, all other lines 0
+				adder_enable <= '0';
+				shifter_enable <= '0';
+				logic_enable <= '0';
+				tester_enable <= '1';
+				
+				-- select 0 result because tester does not produce a 32-bit result
+				-- select 0 for carry, select test result
+				result_select <= "11";
+				carry_select <= '0';
+				test_select <= '1';
+			end if;
 			
-			-- select adder result, select carry result, select 0 for test
-			result_select <= "00";
-			carry_select <= '1';
-			test_select <= '0';
-			
-		-- opcode 01xx is shifter functions
-		elsif opcode_in(3 downto 2) = "01" then
-			-- shifter enable line is 1, all other lines 0
-			adder_enable <= '0';
-			shifter_enable <= '1';
-			logic_enable <= '0';
-			tester_enable <= '0';
-			
-			-- select shifter result, select 0 for carry and test
-			result_select <= "01";
-			carry_select <= '0';
-			test_select <= '0';
-			
-		-- opcode 10xx is logic functions
-		elsif opcode_in(3 downto 2) = "10" then
-			-- logic enable line is 1, all other lines 0
-			adder_enable <= '0';
-			shifter_enable <= '0';
-			logic_enable <= '1';
-			tester_enable <= '0';
-			
-			-- select logic result, select 0 for carry and test
-			result_select <= "10";
-			carry_select <= '0';
-			test_select <= '0';
-			
-		-- opcode 11xx is test functions
-		elsif opcode_in(3 downto 2) = "11" then
-			-- tester enable line is 1, all other lines 0
-			adder_enable <= '0';
-			shifter_enable <= '0';
-			logic_enable <= '0';
-			tester_enable <= '1';
-			
-			-- select 0 result because tester does not produce a 32-bit result
-			-- select 0 for carry, select test result
-			result_select <= "11";
-			carry_select <= '0';
-			test_select <= '1';
-		end if;
+			-- set opcode out to last two bits of opcode in, to select functions within functional blocks
+			opcode_out <= opcode_in(1 downto 0);
 		
-		-- set opcode out to last two bits of opcode in, to select functions within functional blocks
-		opcode_out <= opcode_in(1 downto 0);
+		else
+			adder_enable <= '0';
+			shifter_enable <= '0';
+			logic_enable <= '0';
+			tester_enable <= '0';
+				
+			result_select <= "00";
+			carry_select <= '0';
+			test_select <= '0';
+		end if;
 	end process alu_control;
 	
 end architecture alu_controller_arch;
