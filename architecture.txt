@@ -29,6 +29,10 @@ The operating instruction and memory block addresses can be set using SETI and S
 All branch, load and store instructions are then relative to this operating block address.
 This helps to reduce memory conflicts and increases program portability.
 
+REGISTERS
+
+The VRISC architecture has 32 registers, 31 of which are usable as general purpose registers. r0 is hardcoded as having a value of 0, and cannot be written to.
+
 INSTRUCTIONS
 
 The instruction set is composed of 34 instructions, split into three categories - Arithmetic and Logic, Memory Access, and Control.
@@ -75,13 +79,14 @@ STW	- rs, addr, r0		- memory_word[block + addr + ro] <= rs		Store word in rs at 
 
 CONTROL - 7 INSTRUCTIONS
 
-SETIR	- ra			- instruction_block <= ra			Set the current operating instruction block address to the value of ra
-SETIC	- addr			- instruction_block <= addr			Set the current operating instruction block address to addr
+SETIR	- ra			- pc <= ra					Set pc to the value of ra
+SETIC	- addr			- pc <= addr					Set pc to addr
 
-BR	- offset		- pc <= pc + offset				Branch to instruction at location pc + offset
-BRT	- offset		- pc <= pc + offset if test=1, pc otherwise	Branch to instruction at location pc + offset if test flag is 1
+BRA	- offset		- pc <= pc + offset				Branch to instruction at location pc + offset
+BRAT	- offset		- pc <= pc + offset if test=1, pc otherwise	Branch to instruction at location pc + offset if test flag is 1
 
-CALL	- offset		- stack[top] <= pc + 4, pc <= pc + offset	Call subroutine at location pc + offset, placing the return address onto the stack
-CALLB	- block			- stack[top] <= pc + 4, pc <= block		Call built in subroutine at the given block, placing the return address onto the stack
+CALL	- offset		- stack[top] <= pc + 4, pc <= pc + offset	Branch to subroutine at location pc + offset, placing the return address onto the stack
+CALLR	- ra			- stack[top] <= pc + 4, pc <= ra		Branch to subroutine at location given by the value of ra, placing the return address onto the stack
+CALLB	- addr			- stack[top] <= pc + 4, pc <= block		Branch to subroutine at location addr, placing the return address onto the stack
 RET	-			- pc <= stack[top]				Return to address on the top of the stack
 
