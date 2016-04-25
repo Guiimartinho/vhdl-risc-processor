@@ -83,3 +83,37 @@ architecture alu_32_bit_arch of alu_32_bit is;
 			out_32			:	out	std_logic_vector(31 downto 0)
 		);
 	end component;
+	
+	-- 4-input mux component
+	component mux_4_32_bit is
+		port (
+			-- inputs
+			in_32_1			:	in		std_logic_vector(31 downto 0);
+			in_32_2			:	in		std_logic_vector(31 downto 0);
+			in_32_3			:	in		std_logic_vector(31 downto 0);
+			in_32_4			:	in		std_logic_vector(31 downto 0);
+			
+			-- select signal
+			input_select	:	in		std_logic_vector(1 downto 0);
+			
+			-- output
+			out_32			:	out	std_logic_vector(31 downto 0)
+		);
+	end component;
+	
+	-- adder component
+	component adder_32_bit is
+		port (
+			-- inputs
+			a_32				:	in		std_logic_vector(31 downto 0);
+			b_32				:	in		std_logic_vector(31 downto 0);
+			c_in				:	in		std_logic;
+			
+			opcode			:	in		std_logic_vector(1 downto 0);
+			enable			:	in		std_logic;
+			
+			-- outputs
+			sum_32			:	out	std_logic_vector(31 downto 0);
+			c_out				:	out	std_logic
+		);
+	end component;
