@@ -35,7 +35,7 @@ The VRISC architecture has 32 registers, 31 of which are usable as general purpo
 
 INSTRUCTIONS
 
-The instruction set is composed of 34 instructions, split into three categories - Arithmetic and Logic, Memory Access, and Control.
+The instruction set is composed of 35 instructions, split into three categories - Arithmetic and Logic, Memory Access, and Control.
 Below each instruction is given, with mnemonic, syntax, RTL description and functional description.
 
 ARITHMETIC AND LOGIC - 19 INSTRUCTIONS
@@ -77,7 +77,7 @@ STB	- rs, addr, r0		- memory_byte[block + addr + ro] <= rs		Store byte in rs at 
 STHW	- rs, addr, r0		- memory_hword[block + addr + ro] <= rs		Store half-word in rs at location addr + ro in memory
 STW	- rs, addr, r0		- memory_word[block + addr + ro] <= rs		Store word in rs at location addr + ro in memory
 
-CONTROL - 7 INSTRUCTIONS
+CONTROL - 8 INSTRUCTIONS
 
 SETIR	- ra			- pc <= ra					Set pc to the value of ra
 SETIC	- addr			- pc <= addr					Set pc to addr
