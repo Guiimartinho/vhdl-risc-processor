@@ -246,4 +246,20 @@ begin
 		-- output
 		out_signal		=> carry_out
 	);
+	
+	-- 32-bit result mux instantiation
+	result_mux	:	mux_4_32_bit
+	port map (
+		-- input signals
+		in_32_0			=> adder_result_32,
+		in_32_1			=>	shifter_result_32,
+		in_32_2			=>	logic_result_32,
+		in_32_3			=>	(others => '0'),
+		
+		-- input select
+		input_select	=> result_select,
+		
+		-- output
+		out_32			=> result_32
+	);
 			
