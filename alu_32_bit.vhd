@@ -31,8 +31,9 @@ entity alu_32_bit is
 		-- carry input
 		carry_in		:	in		std_logic;
 		
-		-- opcode input
+		-- opcode and enable inputs
 		opcode		:	in		std_logic_vector(3 downto 0);
+		enable		:	in		std_logic;
 		
 		-- result output
 		result_32	:	out	std_logic_vector(31 downto 0);
@@ -63,7 +64,7 @@ architecture alu_32_bit_arch of alu_32_bit is;
 			opcode_out		:	out	std_logic_vector(1 downto 0);
 			
 			-- select signals
-			result_select	:	out	std_logic_vector(1 downto 0;
+			result_select	:	out	std_logic_vector(1 downto 0);
 			test_select		:	out	std_logic;
 			carry_select	:	out	std_logic
 		);
@@ -162,3 +163,48 @@ architecture alu_32_bit_arch of alu_32_bit is;
 			result			:	out	std_logic
 		);
 	end component;
+	
+	-- internal signal declarations
+	-- enable lines for functional blocks
+	signal adder_enable		:	std_logic;
+	signal shifter_enable	:	std_logic;
+	signal logic_enable		:	std_logic;
+	signal tester_enable		:	std_logic;
+	
+	-- opcode and operand signals
+	signal opcode_line		:	std_logic_vector(1 downto 0);
+	signal a_32					:	std_logic_vector(31 downto 0);
+	signal b_32					:	std_logic_vector(31 downto 0);
+	
+	-- multiplexer control signals
+	signal result_select		:	std_logic_vector(1 downto 0);
+	signal test_select		:	std_logic;
+	signal carry_select		:	std_logic;
+	
+begin
+	-- design implementation
+	controller	:	alu_controller
+	port map (
+		-- opcode and enable port mapping
+		opcode_in		=> opcode,
+		enable			=> enable,
+	
+		-- functional block enable line mapping
+		adder_enable	=> adder_enable,
+		shifter_enable	=>	shifter_enable,
+		logic_enable	=>	logic_enable,
+		tester_enable	=>	tester_enable,
+		
+		-- functional block opcode line mapping
+		opcode_out		=> opcode_line,
+		
+		-- mux select signal mapping
+		result_select 	=> result_select,
+		test_select 	=>	test_select,
+		carry_select	=>	carry_select
+	);
+	
+	
+		
+			
+			
