@@ -71,17 +71,17 @@ architecture alu_32_bit_arch of alu_32_bit is;
 	end component;
 	
 	-- 2-input mux component
-	component mux_2_32_bit is
+	component mux_2_single_bit is
 		port (
 			-- inputs
-			in_32_1			:	in		std_logic_vector(31 downto 0);
-			in_32_2			:	in		std_logic_vector(31 downto 0);
+			in_signal_0			:	in		std_logic;
+			in_signal_1			:	in		std_logic;
 			
 			-- select signal
-			input_select	:	in		std_logic;
+			input_select		:	in		std_logic;
 			
 			-- output
-			out_32			:	out	std_logic_vector(31 downto 0)
+			out_signal			:	out	std_logic
 		);
 	end component;
 	
@@ -89,10 +89,10 @@ architecture alu_32_bit_arch of alu_32_bit is;
 	component mux_4_32_bit is
 		port (
 			-- inputs
+			in_32_0			:	in		std_logic_vector(31 downto 0);
 			in_32_1			:	in		std_logic_vector(31 downto 0);
 			in_32_2			:	in		std_logic_vector(31 downto 0);
 			in_32_3			:	in		std_logic_vector(31 downto 0);
-			in_32_4			:	in		std_logic_vector(31 downto 0);
 			
 			-- select signal
 			input_select	:	in		std_logic_vector(1 downto 0);
@@ -166,23 +166,38 @@ architecture alu_32_bit_arch of alu_32_bit is;
 	
 	-- internal signal declarations
 	-- enable lines for functional blocks
-	signal adder_enable		:	std_logic;
-	signal shifter_enable	:	std_logic;
-	signal logic_enable		:	std_logic;
-	signal tester_enable		:	std_logic;
+	signal adder_enable			:	std_logic;
+	signal shifter_enable		:	std_logic;
+	signal logic_enable			:	std_logic;
+	signal tester_enable			:	std_logic;
 	
 	-- opcode and operand signals
-	signal opcode_line		:	std_logic_vector(1 downto 0);
-	signal a_32					:	std_logic_vector(31 downto 0);
-	signal b_32					:	std_logic_vector(31 downto 0);
+	signal opcode_line			:	std_logic_vector(1 downto 0);
+	signal a_32						:	std_logic_vector(31 downto 0);
+	signal b_32						:	std_logic_vector(31 downto 0);
 	
 	-- multiplexer control signals
-	signal result_select		:	std_logic_vector(1 downto 0);
-	signal test_select		:	std_logic;
-	signal carry_select		:	std_logic;
+	signal result_select			:	std_logic_vector(1 downto 0);
+	signal test_select			:	std_logic;
+	signal carry_select			:	std_logic;
+	
+	-- functional block output signals
+	-- adder
+	signal adder_result_32		:	std_logic_vector(31 downto 0);
+	signal adder_carry_out		:	std_logic;
+	
+	-- shifter
+	signal shifter_result_32	:	std_logic_vector(31 downto 0);
+	
+	-- logic
+	signal logic_result_32		:	std_logic_vector(31 downto 0);
+	
+	-- tester
+	signal tester_result			:	std_logic;
 	
 begin
 	-- design implementation
+	-- ALU controller instantiation
 	controller	:	alu_controller
 	port map (
 		-- opcode and enable port mapping
@@ -204,7 +219,31 @@ begin
 		carry_select	=>	carry_select
 	);
 	
-	
+	-- test result select mux instantiation
+	test_mux		:	mux_2_single_bit
+	port map (
+		-- input signals
+		in_signal_0		=> tester_result,
+		in_signal_1		=> '0',
 		
-			
+		-- input select
+		input_select 	=> test_select,
+		
+		-- output
+		out_signal		=> test_out
+	);
+	
+	-- carry result select mux instantiation
+	carry_mux	:	mux_2_single_bit
+	port map (
+		-- input signals
+		in_signal_0		=> adder_carry_out,
+		in_signal_1		=> '0',
+		
+		-- input select
+		input_select	=>	carry_select,
+		
+		-- output
+		out_signal		=> carry_out
+	);
 			

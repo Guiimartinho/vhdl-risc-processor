@@ -8,8 +8,8 @@ use IEEE.STD_LOGIC_1164.all;
 entity mux_2_32_bit is
 	port (
 		-- inputs
+		in_32_0			:	in		std_logic_vector(31 downto 0);
 		in_32_1			:	in		std_logic_vector(31 downto 0);
-		in_32_2			:	in		std_logic_vector(31 downto 0);
 		
 		-- select signal
 		input_select	:	in		std_logic;
@@ -25,14 +25,14 @@ architecture mux_2_32_bit_arch of mux_2_32_bit is
 	
 begin
 	-- design implementation
-	mux	:	process(input_select, in_32_1, in_32_2)
+	mux	:	process(input_select, in_32_0, in_32_1)
 	begin
-		-- select 0 is input 1
+		-- select 0 is input 0
 		if input_select = '0' then
-			out_32 <= in_32_1;
-		-- select 1 is input 2
+			out_32 <= in_32_0;
+		-- select 1 is input 1
 		elsif input_select = '1' then
-			out_32 <= in_32_2;
+			out_32 <= in_32_1;
 		-- otherwise invalid input signal, output 0
 		else
 			out_32 <= (others => '0');

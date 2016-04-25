@@ -8,10 +8,10 @@ use IEEE.STD_LOGIC_1164.all;
 entity mux_4_32_bit is
 	port (
 		-- inputs
+		in_32_0			:	in		std_logic_vector(31 downto 0);
 		in_32_1			:	in		std_logic_vector(31 downto 0);
 		in_32_2			:	in		std_logic_vector(31 downto 0);
 		in_32_3			:	in		std_logic_vector(31 downto 0);
-		in_32_4			:	in		std_logic_vector(31 downto 0);
 		
 		-- input select
 		input_select	:	in		std_logic_vector(1 downto 0);
@@ -27,20 +27,20 @@ architecture mux_4_32_bit_arch of mux_4_32_bit is
 	
 begin
 	-- design implementation
-	mux	:	process(input_select, in_32_1, in_32_2, in_32_3, in_32_4)
+	mux	:	process(input_select, in_32_0, in_32_1, in_32_2, in_32_3)
 	begin
-		-- select 00 is input 1
+		-- select 00 is input 0
 		if input_select = "00" then
-			out_32 <= in_32_1;
-		-- select 01 is input 2
+			out_32 <= in_32_0;
+		-- select 01 is input 1
 		elsif input_select = "01" then
-			out_32 <= in_32_2;
-		-- select 10 is input 3
+			out_32 <= in_32_1;
+		-- select 10 is input 2
 		elsif input_select = "10" then
-			out_32 <= in_32_3;
-		-- select 11 is input 4
+			out_32 <= in_32_2;
+		-- select 11 is input 3
 		elsif input_select = "11" then
-			out_32 <= in_32_4;
+			out_32 <= in_32_3;
 		-- otherwise invalid select signal, output 0
 		else
 			out_32 <= (others => '0');
