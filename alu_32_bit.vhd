@@ -132,3 +132,33 @@ architecture alu_32_bit_arch of alu_32_bit is;
 			result_32		:	out	std_logic_vector(31 downto 0)
 		);
 	end component;
+	
+	-- logic component
+	component logic_32_bit is
+		port (
+			-- inputs
+			a_32				:	in		std_logic_vector(31 downto 0);
+			b_32				:	in		std_logic_vector(31 downto 0);
+			
+			opcode			:	in		std_logic_vector(1 downto 0);
+			enable			:	in		std_logic;
+			
+			-- outputs
+			result_32		:	out	std_logic_vector(31 downto 0)
+		);
+	end component;
+	
+	-- tester component
+	component tester_32_bit is
+		port (
+			-- inputs
+			a_32				:	in		std_logic_vector(31 downto 0);
+			b_32				:	in		std_logic_vector(31 downto 0);
+			
+			opcode			:	in		std_logic_vector(1 downto 0);
+			enable			:	in		std_logic;
+			
+			-- outputs
+			result			:	out	std_logic
+		);
+	end component;
