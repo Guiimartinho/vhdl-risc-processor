@@ -66,7 +66,7 @@ The VRISC architecture uses 5-bit register addressing, giving 32 register locati
 
 The processor's instruction set is composed of 37 instructions, split into four categories - Arithmetic and Logic, Memory Access, Control, and Miscellaneous. In the table below, each instruction is given with its mnemonic, syntax, RTL description and functional description.
 
-###Arithmetic and Logic###
+####Arithmetic and Logic####
 ```
 ADDR  - rd, rs1, rs2    - rd <= rs1 + rs2                           Add the contents of rs1 and rs2 together, storing the result in rd
 ADDC  - rd, rs1, cons   - rd <= rs1 + cons                          Add constant to the contents of rs1, storing the result in rd
@@ -92,7 +92,7 @@ LESS  - rs1, rs2        - test <= 1 if rs1<rs2                      Update test 
 EQU   - rs1, rs2        - test <= 1 if rs1=rs2                      Update test flag with 1 if the value of rs1 is equal to rs2
 ```
 
-###Memory Access###
+####Memory Access####
 ```
 SETMR - ra              - block <= ra                               Set the current operating memory block address to the value of ra
 SETMC - addr            - block <= addr                             Set the current operating memory block address to addr
@@ -106,7 +106,7 @@ STHW  - rs, addr, r0    - memory_hword[block + addr + ro] <= rs     Store half-w
 STW   - rs, addr, r0    - memory_word[block + addr + ro] <= rs      Store word in rs at location addr + ro in memory
 ```
 
-###Control###
+####Control####
 ```
 SETIR - ra              - pc <= ra                                  Set pc to the value of ra
 SETIC - addr            - pc <= addr                                Set pc to addr
@@ -120,7 +120,7 @@ CALLB - addr            - stack[top] <= pc + 4, pc <= addr          Branch to su
 RET   -                 - pc <= stack[top]                          Return to address on the top of the stack
 ```
 
-###Miscellaneous###
+####Miscellaneous####
 ```
 HALT  -                 -                                           Suspends processor function indefinitely
 NOP   -                 -                                           Stalls processor function for one clock cycle
