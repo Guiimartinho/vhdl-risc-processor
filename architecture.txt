@@ -36,7 +36,7 @@ r0 is hardcoded as having a value of 0, and cannot be written to.
 
 INSTRUCTIONS
 
-The instruction set is composed of 35 instructions, split into three categories - Arithmetic and Logic, Memory Access, and Control.
+The instruction set is composed of 37 instructions, split into three categories - Arithmetic and Logic, Memory Access, and Control.
 Below each instruction is given, with mnemonic, syntax, RTL description and functional description.
 
 ARITHMETIC AND LOGIC - 19 INSTRUCTIONS
@@ -88,6 +88,11 @@ BRAT	- offset		- pc <= pc + offset if test=1, pc otherwise	Branch to instruction
 
 CALL	- offset		- stack[top] <= pc + 4, pc <= pc + offset	Branch to subroutine at location pc + offset, placing the return address onto the stack
 CALLR	- ra			- stack[top] <= pc + 4, pc <= ra		Branch to subroutine at location given by the value of ra, placing the return address onto the stack
-CALLB	- addr			- stack[top] <= pc + 4, pc <= block		Branch to subroutine at location addr, placing the return address onto the stack
+CALLB	- addr			- stack[top] <= pc + 4, pc <= addr		Branch to subroutine at location addr, placing the return address onto the stack
 RET	-			- pc <= stack[top]				Return to address on the top of the stack
+
+MISCELLANEOUS - 2 INSTRUCTIONS
+
+HALT	-			- 						Suspends processor function
+NOP	-			-						Stalls processor function for one clock cycle
 
