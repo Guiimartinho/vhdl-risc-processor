@@ -67,33 +67,61 @@ The VRISC architecture uses 5-bit register addressing, giving 32 register locati
 The processor's instruction set is composed of 37 instructions, split into four categories - Arithmetic and Logic, Memory Access, Control, and Miscellaneous. In the table below, each instruction is given with its mnemonic, syntax, RTL description and functional description.
 
 <table>
+  <col width="100px" />
+  <col width="150px" />
+  <col width="250px" />
   <tr>
     <th colspan="5">Arithmetic and Logic</th>
   </tr>
   
   <tr>
     <td>ADDR</td>
-    <td width="150px">rd, rs1, rs2</td>
-    <td width="250px">rd <= rs1 + rs2</td>
+    <td>rd, rs1, rs2</td>
+    <td>rd <= rs1 + rs2</td>
     <td>Add the contents of rs1 and rs2 together, storing the result in rd</td>
   </tr>
   <tr>
     <td>ADDC</td>
-    <td width="150px">rd, rs1, cons</td>
-    <td width="250px">rd <= rs1 + cons</td>
+    <td>rd, rs1, cons</td>
+    <td>rd <= rs1 + cons</td>
     <td>Add constant to the contents of rs1, storing the result in rd</td>
   </tr>
   <tr>
     <td>ADDRC</td>
-    <td width="150px">rd, rs1, rs2</td>
-    <td width="250px">rd <= rs1 + rs2 + overflow</td>
+    <td>rd, rs1, rs2</td>
+    <td>rd <= rs1 + rs2 + overflow</td>
     <td>Add the contents of rs1 and rs2 together with carry bit from the previous operation, storing the result in rd</td>
   </tr>
   <tr>
     <td>ADDCC</td>
-    <td width="150px">rd, rs1, cons</td>
-    <td width="250px">rd <= rs1 + cons + overflow</td>
+    <td>rd, rs1, cons</td>
+    <td>rd <= rs1 + cons + overflow</td>
     <td>Add constant to the contents of rs1, along with carry bit from the previous operation, storing the result in rd</td>
+  </tr>
+  
+  <tr>
+    <td>SUBR</td>
+    <td>rd, rs1, rs2</td>
+    <td>rd <= rs1 - rs2</td>
+    <td>Subtract the contents of rs2 from rs1, storing the result in rd</td>
+  </tr>
+  <tr>
+    <td>SUBC</td>
+    <td>rd, rs1, cons</td>
+    <td>rd <= rs1 - cons</td>
+    <td>Subtract constant from contents of rs1, storing the result in rd</td>
+  </tr>
+  <tr>
+    <td>SUBRB</td>
+    <td>rd, rs1, rs2</td>
+    <td>rd <= rs1 - rs2 - overflow</td>
+    <td>Subtract the contents of rs2 from rs1, along with borrow bit from the previous operation, storing the result in rd<td>
+  </tr>
+  <tr>
+    <td>SUBCB</td>
+    <td>rd, rs1, cons</td>
+    <td>rd <= rs1 - cons - overflow</td>
+    <td>Subtract constant from contents of rs1, along with borrow bit from the previous operation, storing the result in rd</td>
   </tr>
   
   
