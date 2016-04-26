@@ -39,4 +39,4 @@ begin
 		end if;
 	end process mux;
 
-end process mux_2_single_bit_arch;
+end architecture mux_2_single_bit_arch;

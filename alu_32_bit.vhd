@@ -22,6 +22,9 @@
 -- LESS	1110	Test if operand a < operand b
 -- EQU	1111	Test if operand a = operand b
 
+library IEEE;
+use IEEE.STD_LOGIC_1164.all;
+
 entity alu_32_bit is
 	port (
 		-- operand inputs
@@ -45,7 +48,7 @@ entity alu_32_bit is
 	
 end entity alu_32_bit;
 
-architecture alu_32_bit_arch of alu_32_bit is;
+architecture alu_32_bit_arch of alu_32_bit is
 	-- controller component
 	component alu_controller is
 		port (
@@ -173,8 +176,6 @@ architecture alu_32_bit_arch of alu_32_bit is;
 	
 	-- opcode and operand signals
 	signal opcode_line			:	std_logic_vector(1 downto 0);
-	signal a_32						:	std_logic_vector(31 downto 0);
-	signal b_32						:	std_logic_vector(31 downto 0);
 	
 	-- multiplexer control signals
 	signal result_select			:	std_logic_vector(1 downto 0);
@@ -262,4 +263,67 @@ begin
 		-- output
 		out_32			=> result_32
 	);
-			
+	
+	-- adder instantiation
+	adder			:	adder_32_bit
+	port map (
+		-- inputs
+		a_32 				=> a_32,
+		b_32				=>	b_32,
+		c_in				=> carry_in,
+		
+		-- opcode and enable
+		opcode 			=> opcode_line,
+		enable			=> adder_enable,
+		
+		-- outputs
+		sum_32			=> adder_result_32,
+		c_out				=> adder_carry_out
+	);
+	
+	-- shifter instantiation
+	shifter		:	shifter_32_bit
+	port map (
+		-- inputs
+		a_32				=> a_32,
+		b_32				=> b_32,
+		
+		-- opcode and enable
+		opcode			=> opcode_line,
+		enable			=> shifter_enable,
+		
+		-- outputs
+		result_32		=> shifter_result_32
+	);
+	
+	-- logic instantiation
+	logic			:	logic_32_bit
+	port map (
+		-- inputs
+		a_32				=>	a_32,
+		b_32				=>	b_32,
+		
+		-- opcode and enable
+		opcode			=> opcode_line,
+		enable			=> logic_enable,
+		
+		-- outputs
+		result_32		=> logic_result_32
+	);
+	
+	-- tester instantiation
+	tester		:	tester_32_bit
+	port map (
+		-- inputs
+		a_32				=> a_32,
+		b_32				=> b_32,
+		
+		-- opcode and enable
+		opcode			=>	opcode_line,
+		enable			=>	tester_enable,
+		
+		-- outputs
+		result			=> tester_result
+	);
+
+end architecture alu_32_bit_arch;	
