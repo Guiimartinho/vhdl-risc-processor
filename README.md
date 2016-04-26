@@ -68,13 +68,13 @@ The processor's instruction set is composed of 37 instructions, split into four 
 
 <table>
   <colgroup>
-    <col width="15%" />
-    <col width="20%" />
-    <col width="20%" />
-    <col width="45%" />
+    <col span="1" width="15%" />
+    <col span="1" width="20%" />
+    <col span="1" width="20%" />
+    <col span="1" width="45%" />
   </colgroup>
   <tr>
-    <th colspan="5">Arithmetic and Logic</th>
+    <th colspan="4">Arithmetic and Logic</th>
   </tr>
   
   <tr>
