@@ -75,50 +75,50 @@ The processor's instruction set is composed of 37 instructions, split into four 
     <td>ADDR</td>
     <td>rd, rs1, rs2</td>
     <td>rd <= rs1 + rs2</td>
-    <td width="45%">Add the contents of rs1 and rs2 together, storing the result in rd</td>
+    <td width="300px">Add the contents of rs1 and rs2 together, storing the result in rd</td>
   </tr>
   <tr>
     <td>ADDC</td>
     <td>rd, rs1, cons</td>
     <td>rd <= rs1 + cons</td>
-    <td width="45%">Add constant to the contents of rs1, storing the result in rd</td>
+    <td width="300px">Add constant to the contents of rs1, storing the result in rd</td>
   </tr>
   <tr>
     <td>ADDRC</td>
     <td>rd, rs1, rs2</td>
     <td>rd <= rs1 + rs2 + overflow</td>
-    <td width="45%">Add the contents of rs1 and rs2 together with carry bit from the previous operation, storing the result in rd</td>
+    <td width="300px">Add the contents of rs1 and rs2 together with carry bit from the previous operation, storing the result in rd</td>
   </tr>
   <tr>
     <td>ADDCC</td>
     <td>rd, rs1, cons</td>
     <td>rd <= rs1 + cons + overflow</td>
-    <td width="45%">Add constant to the contents of rs1, along with carry bit from the previous operation, storing the result in rd</td>
+    <td width="300px">Add constant to the contents of rs1, along with carry bit from the previous operation, storing the result in rd</td>
   </tr>
   
   <tr>
     <td>SUBR</td>
     <td>rd, rs1, rs2</td>
     <td>rd <= rs1 - rs2</td>
-    <td width="45%">Subtract the contents of rs2 from rs1, storing the result in rd</td>
+    <td width="300px">Subtract the contents of rs2 from rs1, storing the result in rd</td>
   </tr>
   <tr>
     <td>SUBC</td>
     <td>rd, rs1, cons</td>
     <td>rd <= rs1 - cons</td>
-    <td width="45%">Subtract constant from contents of rs1, storing the result in rd</td>
+    <td width="300px">Subtract constant from contents of rs1, storing the result in rd</td>
   </tr>
   <tr>
     <td>SUBRB</td>
     <td>rd, rs1, rs2</td>
     <td>rd <= rs1 - rs2 - overflow</td>
-    <td width="45%">Subtract the contents of rs2 from rs1, along with borrow bit from the previous operation, storing the result in rd<td>
+    <td width="300px">Subtract the contents of rs2 from rs1, along with borrow bit from the previous operation, storing the result in rd<td>
   </tr>
   <tr>
     <td>SUBCB</td>
     <td>rd, rs1, cons</td>
     <td>rd <= rs1 - cons - overflow</td>
-    <td width="45%">Subtract constant from contents of rs1, along with borrow bit from the previous operation, storing the result in rd</td>
+    <td width="300px">Subtract constant from contents of rs1, along with borrow bit from the previous operation, storing the result in rd</td>
   </tr>
   
   
