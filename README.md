@@ -73,7 +73,7 @@ The processor's instruction set is composed of 37 instructions, split into four 
   
   <tr>
     <td>ADDR</td>
-    <td>rd, rs1, rs2</td>
+    <td width="20px">rd, rs1, rs2</td>
     <td>rd <= rs1 + rs2</td>
     <td>Add the contents of rs1 and rs2 together, storing the result in rd</td>
   </tr>
