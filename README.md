@@ -67,30 +67,61 @@ The VRISC architecture uses 5-bit register addressing, giving 32 register locati
 The processor's instruction set is composed of 37 instructions, split into four categories - Arithmetic and Logic, Memory Access, Control, and Miscellaneous. In the table below, each instruction is given with its mnemonic, syntax, RTL description and functional description.
 
 ###Arithmetic and Logic###
-ADDR	- rd, rs1, rs2 		- rd <= rs1 + rs2				Add the contents of rs1 and rs2 together, storing the result in rd
-ADDC	- rd, rs1, cons		- rd <= rs1 + cons				Add constant to the contents of rs1, storing the result in rd
-ADDRC	- rd, rs1, rs2		- rd <= rs1 + rs2 + overflow			Add the contents of rs1 and rs2 together, along with carry bit from the previous operation, storing the result in rd
-ADDCC	- rd, rs1, cons		- rd <= rs1 + cons + overflow			Add constant to the contents of rs1, along with carry bit from the previous operation, storing the result in rd
+```
+ADDR  - rd, rs1, rs2    - rd <= rs1 + rs2                           Add the contents of rs1 and rs2 together, storing the result in rd
+ADDC  - rd, rs1, cons   - rd <= rs1 + cons                          Add constant to the contents of rs1, storing the result in rd
+ADDRC - rd, rs1, rs2    - rd <= rs1 + rs2 + overflow                Add the contents of rs1 and rs2 together, along with carry bit from the previous operation, storing the result in rd
+ADDCC - rd, rs1, cons   - rd <= rs1 + cons + overflow               Add constant to the contents of rs1, along with carry bit from the previous operation, storing the result in rd
 
-SUBR	- rd, rs1, rs2		- rd <= rs1 - rs2				Subtract the contents of rs2 from rs1, storing the result in rd
-SUBC	- rd, rs1, cons		- rd <= rs1 - cons				Subtract constant from contents of rs1, storing the result in rd
-SUBRB	- rd, rs1, rs2		- rd <= rs1 - rs2 - overflow 			Subtract the contents of rs2 from rs1, along with borrow bit from the previous operation, storing the result in rd
-SUBCB	- rd, rs1, cons		- rd <= rs1 - cons - overflow			Subtract constant from contents of rs1, along with borrow bit from the previous operation, storing the result in rd
+SUBR  - rd, rs1, rs2    - rd <= rs1 - rs2                           Subtract the contents of rs2 from rs1, storing the result in rd
+SUBC  - rd, rs1, cons   - rd <= rs1 - cons                          Subtract constant from contents of rs1, storing the result in rd
+SUBRB - rd, rs1, rs2    - rd <= rs1 - rs2 - overflow                Subtract the contents of rs2 from rs1, along with borrow bit from the previous operation, storing the result in rd
+SUBCB - rd, rs1, cons   - rd <= rs1 - cons - overflow               Subtract constant from contents of rs1, along with borrow bit from the previous operation, storing the result in rd
 
-ANDR	- rd, rs1, rs2		- rd <= rs1 AND rs2				AND the contents of rs1 and rs2, storing the result in rd
-ANDC	- rd, rs1, cons		- rd <= rs1 AND cons				AND constant with the contents of rs1, storing the result in rd
-ORR	- rd, rs1, rs2		- rd <= rs1 OR rs2				OR the contents of rs1 and rs2, storing the result in rd
-ORC	- rd, rs1, cons		- rd <= rs1 OR cons				OR constant with the contents of rs1, storing the result in rd
-XORR	- rd, rs1, rs2		- rd <= rs1 XOR rs2				XOR the contents of rs1 and rs2, storing the result in rd
-XORC	- rd, rs1, cons		- rd <= rs1 XOR cons				XOR constant with the contents of rs1, storing the result in rd	
-NOT	- rd, rs1		- rd <= NOT rs1					NOT the contents of rs1, storing the result in rd
+ANDR  - rd, rs1, rs2    - rd <= rs1 AND rs2                         AND the contents of rs1 and rs2, storing the result in rd
+ANDC  - rd, rs1, cons   - rd <= rs1 AND cons                        AND constant with the contents of rs1, storing the result in rd
+ORR   - rd, rs1, rs2    - rd <= rs1 OR rs2                          OR the contents of rs1 and rs2, storing the result in rd
+ORC   - rd, rs1, cons   - rd <= rs1 OR cons                         OR constant with the contents of rs1, storing the result in rd
+XORR  - rd, rs1, rs2    - rd <= rs1 XOR rs2                         XOR the contents of rs1 and rs2, storing the result in rd
+XORC  - rd, rs1, cons   - rd <= rs1 XOR cons                        XOR constant with the contents of rs1, storing the result in rd
+NOT   - rd, rs1         - rd <= NOT rs1                             NOT the contents of rs1, storing the result in rd
 
-ZERO	- rs1			- test <= 1 if rs1=0, 0 otherwise		Update test flag with 1 if the value of rs1 is equal to zero 
-GRT	- rs1, rs2		- test <= 1 if rs1>rs2, 0 otherwise		Update test flag with 1 if the value of rs1 is greater than rs2
-LESS	- rs1, rs2		- test <= 1 if rs1<rs2, 0 otherwise		Update test flag with 1 if the value of rs1 is less than rs2
-EQU	- rs1, rs2		- test <= 1 if rs1=rs2, 0 otherwise		Update test flag with 1 if the value of rs1 is equal to rs2
+ZERO  - rs1             - test <= 1 if rs1=0                        Update test flag with 1 if the value of rs1 is equal to zero
+GRT   - rs1, rs2        - test <= 1 if rs1>rs2                      Update test flag with 1 if the value of rs1 is greater than rs2
+LESS  - rs1, rs2        - test <= 1 if rs1<rs2                      Update test flag with 1 if the value of rs1 is less than rs2
+EQU   - rs1, rs2        - test <= 1 if rs1=rs2                      Update test flag with 1 if the value of rs1 is equal to rs2
+```
 
-  
-  
-  
-</table>
+###Memory Access###
+```
+SETMR - ra              - block <= ra                               Set the current operating memory block address to the value of ra
+SETMC - addr            - block <= addr                             Set the current operating memory block address to addr
+
+LDB   - rd, addr, ro    - rd <= memory_byte[block + addr + ro]      Load byte at location addr + ro in memory into rd
+LDHW  - rd, addr, ro    - rd <= memory_hword[block + addr + ro]     Load half-word at location addr + ro in memory into rd
+LDW   - rd, addr, ro    - rd <= memory_word[block + addr + ro]      Load word at location addr + ro in memory into rd
+
+STB   - rs, addr, r0    - memory_byte[block + addr + ro] <= rs      Store byte in rs at location addr + ro in memory
+STHW  - rs, addr, r0    - memory_hword[block + addr + ro] <= rs     Store half-word in rs at location addr + ro in memory
+STW   - rs, addr, r0    - memory_word[block + addr + ro] <= rs      Store word in rs at location addr + ro in memory
+```
+
+###Control###
+```
+SETIR - ra              - pc <= ra                                  Set pc to the value of ra
+SETIC - addr            - pc <= addr                                Set pc to addr
+
+BRA   - offset          - pc <= pc + offset                         Branch to instruction at location pc + offset
+BRAT  - offset          - pc <= pc + offset if test=1               Branch to instruction at location pc + offset if test flag is 1
+
+CALL  - offset          - stack[top] <= pc + 4, pc <= pc + offset	  Branch to subroutine at location pc + offset, placing the return address onto the stack
+CALLR - ra              - stack[top] <= pc + 4, pc <= ra            Branch to subroutine at location given by the value of ra, placing the return address onto the stack
+CALLB - addr            - stack[top] <= pc + 4, pc <= addr          Branch to subroutine at location addr, placing the return address onto the stack
+RET   -                 - pc <= stack[top]                          Return to address on the top of the stack
+```
+
+###Miscellaneous###
+```
+HALT  -                 -                                           Suspends processor function indefinitely
+NOP   -                 -                                           Stalls processor function for one clock cycle
+```
