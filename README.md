@@ -66,60 +66,30 @@ The VRISC architecture uses 5-bit register addressing, giving 32 register locati
 
 The processor's instruction set is composed of 37 instructions, split into four categories - Arithmetic and Logic, Memory Access, Control, and Miscellaneous. In the table below, each instruction is given with its mnemonic, syntax, RTL description and functional description.
 
-<table width="100%">
-  <tr>
-    <th colspan="4">Arithmetic and Logic</th>
-  </tr>
-  
-  <tr>
-    <td>ADDR</td>
-    <td>rd, rs1, rs2</td>
-    <td>rd <= rs1 + rs2</td>
-    <td width="300px">Add the contents of rs1 and rs2 together, storing the result in rd</td>
-  </tr>
-  <tr>
-    <td>ADDC</td>
-    <td>rd, rs1, cons</td>
-    <td>rd <= rs1 + cons</td>
-    <td width="300px">Add constant to the contents of rs1, storing the result in rd</td>
-  </tr>
-  <tr>
-    <td>ADDRC</td>
-    <td>rd, rs1, rs2</td>
-    <td>rd <= rs1 + rs2 + overflow</td>
-    <td width="300px">Add the contents of rs1 and rs2 together with carry bit from the previous operation, storing the result in rd</td>
-  </tr>
-  <tr>
-    <td>ADDCC</td>
-    <td>rd, rs1, cons</td>
-    <td>rd <= rs1 + cons + overflow</td>
-    <td width="300px">Add constant to the contents of rs1, along with carry bit from the previous operation, storing the result in rd</td>
-  </tr>
-  
-  <tr>
-    <td>SUBR</td>
-    <td>rd, rs1, rs2</td>
-    <td>rd <= rs1 - rs2</td>
-    <td width="300px">Subtract the contents of rs2 from rs1, storing the result in rd</td>
-  </tr>
-  <tr>
-    <td>SUBC</td>
-    <td>rd, rs1, cons</td>
-    <td>rd <= rs1 - cons</td>
-    <td width="300px">Subtract constant from contents of rs1, storing the result in rd</td>
-  </tr>
-  <tr>
-    <td>SUBRB</td>
-    <td>rd, rs1, rs2</td>
-    <td>rd <= rs1 - rs2 - overflow</td>
-    <td width="300px">Subtract the contents of rs2 from rs1, along with borrow bit from the previous operation, storing the result in rd<td>
-  </tr>
-  <tr>
-    <td>SUBCB</td>
-    <td>rd, rs1, cons</td>
-    <td>rd <= rs1 - cons - overflow</td>
-    <td width="300px">Subtract constant from contents of rs1, along with borrow bit from the previous operation, storing the result in rd</td>
-  </tr>
+###Arithmetic and Logic###
+ADDR	- rd, rs1, rs2 		- rd <= rs1 + rs2				Add the contents of rs1 and rs2 together, storing the result in rd
+ADDC	- rd, rs1, cons		- rd <= rs1 + cons				Add constant to the contents of rs1, storing the result in rd
+ADDRC	- rd, rs1, rs2		- rd <= rs1 + rs2 + overflow			Add the contents of rs1 and rs2 together, along with carry bit from the previous operation, storing the result in rd
+ADDCC	- rd, rs1, cons		- rd <= rs1 + cons + overflow			Add constant to the contents of rs1, along with carry bit from the previous operation, storing the result in rd
+
+SUBR	- rd, rs1, rs2		- rd <= rs1 - rs2				Subtract the contents of rs2 from rs1, storing the result in rd
+SUBC	- rd, rs1, cons		- rd <= rs1 - cons				Subtract constant from contents of rs1, storing the result in rd
+SUBRB	- rd, rs1, rs2		- rd <= rs1 - rs2 - overflow 			Subtract the contents of rs2 from rs1, along with borrow bit from the previous operation, storing the result in rd
+SUBCB	- rd, rs1, cons		- rd <= rs1 - cons - overflow			Subtract constant from contents of rs1, along with borrow bit from the previous operation, storing the result in rd
+
+ANDR	- rd, rs1, rs2		- rd <= rs1 AND rs2				AND the contents of rs1 and rs2, storing the result in rd
+ANDC	- rd, rs1, cons		- rd <= rs1 AND cons				AND constant with the contents of rs1, storing the result in rd
+ORR	- rd, rs1, rs2		- rd <= rs1 OR rs2				OR the contents of rs1 and rs2, storing the result in rd
+ORC	- rd, rs1, cons		- rd <= rs1 OR cons				OR constant with the contents of rs1, storing the result in rd
+XORR	- rd, rs1, rs2		- rd <= rs1 XOR rs2				XOR the contents of rs1 and rs2, storing the result in rd
+XORC	- rd, rs1, cons		- rd <= rs1 XOR cons				XOR constant with the contents of rs1, storing the result in rd	
+NOT	- rd, rs1		- rd <= NOT rs1					NOT the contents of rs1, storing the result in rd
+
+ZERO	- rs1			- test <= 1 if rs1=0, 0 otherwise		Update test flag with 1 if the value of rs1 is equal to zero 
+GRT	- rs1, rs2		- test <= 1 if rs1>rs2, 0 otherwise		Update test flag with 1 if the value of rs1 is greater than rs2
+LESS	- rs1, rs2		- test <= 1 if rs1<rs2, 0 otherwise		Update test flag with 1 if the value of rs1 is less than rs2
+EQU	- rs1, rs2		- test <= 1 if rs1=rs2, 0 otherwise		Update test flag with 1 if the value of rs1 is equal to rs2
+
   
   
   
