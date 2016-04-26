@@ -31,7 +31,8 @@ This helps to reduce memory conflicts and increases program portability.
 
 REGISTERS
 
-The VRISC architecture has 32 registers, 31 of which are usable as general purpose registers. r0 is hardcoded as having a value of 0, and cannot be written to.
+The VRISC architecture has 32 registers, 31 of which are usable as general purpose registers. 
+r0 is hardcoded as having a value of 0, and cannot be written to.
 
 INSTRUCTIONS
 
