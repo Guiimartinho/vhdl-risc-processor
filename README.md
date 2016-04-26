@@ -58,3 +58,44 @@ It uses a fixed-length, 32-bit instruction format, with six addressing modes:
   </tr>
 </table>
     
+##Registers##
+
+The VRISC architecture uses 5-bit register addressing, giving 32 register locations. 31 of these (0x01-0x1F) are general purpose registers which can be written to and read from. R0 (0x00) is hardcoded as having a value of 0, and cannot be written to. The registers store 32-bit signed two's complement values.
+
+##Instructions##
+
+The processor's instruction set is composed of 37 instructions, split into four categories - Arithmetic and Logic, Memory Access, Control, and Miscellaneous. In the table below, each instruction is given with its mnemonic, syntax, RTL description and functional description.
+
+<table>
+  <tr>
+    <th colspan="5">Arithmetic and Logic</th>
+  </tr>
+  
+  <tr>
+    <td>ADDR</td>
+    <td>rd, rs1, rs2</td>
+    <td>rd <= rs1 + rs2</td>
+    <td>Add the contents of rs1 and rs2 together, storing the result in rd</td>
+  </tr>
+  <tr>
+    <td>ADDC</td>
+    <td>rd, rs1, cons</td>
+    <td>rd <= rs1 + cons</td>
+    <td>Add constant to the contents of rs1, storing the result in rd</td>
+  </tr>
+  <tr>
+    <td>ADDRC</td>
+    <td>rd, rs1, rs2</td>
+    <td>rd <= rs1 + rs2 + overflow</td>
+    <td>Add the contents of rs1 and rs2 together with carry bit from the previous operation, storing the result in rd</td>
+  </tr>
+  <tr>
+    <td>ADDCC</td>
+    <td>rd, rs1, cons</td>
+    <td>rd <= rs1 + cons + overflow</td>
+    <td>Add constant to the contents of rs1, along with carry bit from the previous operation, storing the result in rd</td>
+  </tr>
+  
+  
+  
+</table>
