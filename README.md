@@ -73,26 +73,26 @@ The processor's instruction set is composed of 37 instructions, split into four 
   
   <tr>
     <td>ADDR</td>
-    <td width="20px">rd, rs1, rs2</td>
-    <td>rd <= rs1 + rs2</td>
+    <td width="120px">rd, rs1, rs2</td>
+    <td width="120px">rd <= rs1 + rs2</td>
     <td>Add the contents of rs1 and rs2 together, storing the result in rd</td>
   </tr>
   <tr>
     <td>ADDC</td>
-    <td>rd, rs1, cons</td>
-    <td>rd <= rs1 + cons</td>
+    <td width="120px">rd, rs1, cons</td>
+    <td width="120px">rd <= rs1 + cons</td>
     <td>Add constant to the contents of rs1, storing the result in rd</td>
   </tr>
   <tr>
     <td>ADDRC</td>
-    <td>rd, rs1, rs2</td>
-    <td>rd <= rs1 + rs2 + overflow</td>
+    <td width="120px">rd, rs1, rs2</td>
+    <td width="120px">rd <= rs1 + rs2 + overflow</td>
     <td>Add the contents of rs1 and rs2 together with carry bit from the previous operation, storing the result in rd</td>
   </tr>
   <tr>
     <td>ADDCC</td>
-    <td>rd, rs1, cons</td>
-    <td>rd <= rs1 + cons + overflow</td>
+    <td width="120px">rd, rs1, cons</td>
+    <td width="120px">rd <= rs1 + cons + overflow</td>
     <td>Add constant to the contents of rs1, along with carry bit from the previous operation, storing the result in rd</td>
   </tr>
   
