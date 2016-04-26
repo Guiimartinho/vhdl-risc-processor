@@ -14,3 +14,21 @@ Offset Branch Addressing:   |opcode - 6|offset - 26							            | <br>
 Offset Memory Addressing:   |opcode - 6|rsd - 5|ro - 5|addr - 16			      | <br>
 Absolute Block Addressing:  |opcode - 6|block addr - 26						          | <br>
 Register Block Addressing:  |opcode - 6|ra - 5|unused - 21				        	| <br>
+
+<table>
+  <tr>
+    <th>Addressing Mode</th>
+    <th colspan="5">Instruction Fields</th>
+  </tr>
+  
+  <tr>
+    <td>3-Register Addressing</td>
+    <td>opcode - 6 bits</td>
+    <td>rd - 5 bits</td>
+    <td>rs1 - 5 bits</td>
+    <td>rs2 - 5 bits</td>
+    <td>unused - 11 bits</td>
+  </tr>
+  
+</table>
+    
