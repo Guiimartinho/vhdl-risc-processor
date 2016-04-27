@@ -14,7 +14,7 @@ It uses a fixed-length, 32-bit instruction format, with six addressing modes:
   </tr>
   
   <tr>
-    <td>3-Register Addressing</td>
+    <td>Register Addressing</td>
     <td>opcode - 6 bits</td>
     <td>rd - 5 bits</td>
     <td>rs1 - 5 bits</td>
@@ -87,9 +87,12 @@ XORC  - rd, rs1, cons   - rd <= rs1 XOR cons                        XOR constant
 NOT   - rd, rs1         - rd <= NOT rs1                             NOT the contents of rs1, storing the result in rd
 
 ZERO  - rs1             - test <= 1 if rs1=0                        Update test flag with 1 if the value of rs1 is equal to zero
-GRT   - rs1, rs2        - test <= 1 if rs1>rs2                      Update test flag with 1 if the value of rs1 is greater than rs2
-LESS  - rs1, rs2        - test <= 1 if rs1<rs2                      Update test flag with 1 if the value of rs1 is less than rs2
-EQU   - rs1, rs2        - test <= 1 if rs1=rs2                      Update test flag with 1 if the value of rs1 is equal to rs2
+GRTR  - rs1, rs2        - test <= 1 if rs1>rs2                      Update test flag with 1 if the value of rs1 is greater than rs2
+GRTC  - rs1, cons       - test <= 1 if rs1>cons                     Update test flag with 1 if the value of rs1 is greater than constant
+LESSR - rs1, rs2        - test <= 1 if rs1<rs2                      Update test flag with 1 if the value of rs1 is less than rs2
+LESSC - rs1, cons       - test <= 1 if rs1<cons                     Update test flag with 1 if the value of rs1 is less than constant
+EQUR  - rs1, rs2        - test <= 1 if rs1=rs2                      Update test flag with 1 if the value of rs1 is equal to rs2
+EQUC  - rs1, cons       - test <= 1 if rs1=cons                     Update test flag with 1 if the value of rs1 is equal to constant
 ```
 
 ####Memory Access####
@@ -122,6 +125,6 @@ RET   -                 - pc <= stack[top]                          Return to ad
 
 ####Miscellaneous####
 ```
-HALT  -                 -                                           Suspends processor function indefinitely
-NOP   -                 -                                           Stalls processor function for one clock cycle
+HALT  -                 -                                           Suspends processor operation indefinitely
+NOP   -                 -                                           Stalls processor operation for one clock cycle
 ```
