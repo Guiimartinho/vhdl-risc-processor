@@ -64,7 +64,7 @@ The VRISC architecture uses 5-bit register addressing, giving 32 register locati
 
 ##Instructions##
 
-The processor's instruction set is composed of 37 instructions, split into four categories - Arithmetic and Logic, Memory Access, Control, and Miscellaneous. In the table below, each instruction is given with its mnemonic, syntax, RTL description and functional description.
+The processor's instruction set is composed of 40 instructions, split into four categories - Arithmetic and Logic, Memory Access, Control, and Miscellaneous. In the table below, each instruction is given with its mnemonic, syntax, RTL description and functional description.
 
 ####Arithmetic and Logic####
 ```
