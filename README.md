@@ -117,7 +117,7 @@ SETIC - addr            - pc <= addr                                Set pc to ad
 BRA   - offset          - pc <= pc + offset                         Branch to instruction at location pc + offset
 BRAT  - offset          - pc <= pc + offset if test=1               Branch to instruction at location pc + offset if test flag is 1
 
-CALL  - offset          - stack[top] <= pc + 4, pc <= pc + offset	  Branch to subroutine at location pc + offset, placing the return address onto the stack
+CALL  - offset          - stack[top] <= pc + 4, pc <= pc + offset	Branch to subroutine at location pc + offset, placing the return address onto the stack
 CALLR - ra              - stack[top] <= pc + 4, pc <= ra            Branch to subroutine at location given by the value of ra, placing the return address onto the stack
 CALLB - addr            - stack[top] <= pc + 4, pc <= addr          Branch to subroutine at location addr, placing the return address onto the stack
 RET   -                 - pc <= stack[top]                          Return to address on the top of the stack
