@@ -1,7 +1,7 @@
 #VRISC (VHDL-RISC) Architecture#
 
 ##Copyright and License##
-All code contained in this repository is (c) copyright 2016 Jay Valentine, and is released under the MIT License.
+All code and designs contained in this repository are (c) copyright 2016 Jay Valentine, and are released under the MIT License.
 See LICENSE file for more details.
 
 ##Overview##
