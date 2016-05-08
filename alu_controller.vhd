@@ -89,8 +89,18 @@ begin
 				result_select <= "11";
 				carry_select <= '0';
 				test_select <= '1';
+			else
+				-- all lines 0
+				adder_enable <= '0';
+				shifter_enable <= '0';
+				logic_enable <= '0';
+				tester_enable <= '0';
+				
+				result_select <= "00";
+				carry_select <= '0';
+				test_select <= '0';
 			end if;
-			
+				
 			-- set opcode out to last two bits of opcode in, to select functions within functional blocks
 			opcode_out <= opcode_in(1 downto 0);
 		
@@ -103,6 +113,7 @@ begin
 			result_select <= "00";
 			carry_select <= '0';
 			test_select <= '0';
+			opcode_out <= "00";
 		end if;
 	end process alu_control;
 	
