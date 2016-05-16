@@ -18,8 +18,8 @@
 -- NOT	1011	Logical NOT (operand A)
 
 -- ZERO	1100	Test if operand a equals 0
--- GRT	1101	Test if operand a > operand b
--- LESS	1110	Test if operand a < operand b
+-- LESS	1101	Test if operand a < operand b
+-- GRT	1110	Test if operand a > operand b
 -- EQU	1111	Test if operand a = operand b
 
 library IEEE;
