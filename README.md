@@ -5,7 +5,7 @@ All code and designs contained in this repository are (c) copyright 2016 Jay Val
 See LICENSE file for more details.
 
 ##Overview##
-VRISC is a 32-bit, little-endian Harvard architecture. <br>
+VRISC is a 32-bit, little-endian Harvard architecture RISC processor. <br>
 It uses a fixed-length, 32-bit instruction format, with six addressing modes:
 <table>
   <tr>
