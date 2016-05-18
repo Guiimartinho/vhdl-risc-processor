@@ -64,7 +64,7 @@ The VRISC architecture uses 5-bit register addressing, giving 32 register locati
 
 ##Instructions##
 
-The processor's instruction set is composed of 40 instructions, split into four categories - Arithmetic and Logic, Memory Access, Control, and Miscellaneous. In the table below, each instruction is given with its mnemonic, syntax, RTL description and functional description.
+The processor's instruction set is composed of 44 instructions, split into four categories - Arithmetic and Logic, Memory Access, Control, and Miscellaneous. In the table below, each instruction is given with its mnemonic, syntax, RTL description and functional description.
 
 ####Arithmetic and Logic####
 ```
@@ -77,6 +77,11 @@ SUBR  - rd, rs1, rs2    - rd <= rs1 - rs2                           Subtract the
 SUBI  - rd, rs1, imm    - rd <= rs1 - imm                           Subtract immediate from contents of rs1, storing the result in rd
 SUBRB - rd, rs1, rs2    - rd <= rs1 - rs2 - overflow                Subtract the contents of rs2 from rs1, along with borrow bit from the previous operation, storing the result in rd
 SUBIB - rd, rs1, imm    - rd <= rs1 - imm - overflow                Subtract immediate from contents of rs1, along with borrow bit from the previous operation, storing the result in rd
+
+SLL   - rd, rs1			- rd <= (rs1 << 1) & 0						Shift the contents of rs1 left by one bit, with the lsb of the new value being 0, storing the result in rd
+SRL	  - rd, rs1			- rd <= 0 & (rs1 >> 1)						Shift the contents of rs1 right by one bit, with the msb of the new value being 0, storing the result in rd
+SLA	  - rd, rs1			- rd <= (rs1 << 1) & lsb					Shift the contents of rs1 left by one bit, maintaining the lsb of the old value, storing the result in rd
+SRA	  - rd, rs1			- rd <= msb & (rs1 >> 1)					Shift the contents of rs1 right by one bit, maintaining the msb of the old value, storing the result in rd
 
 ANDR  - rd, rs1, rs2    - rd <= rs1 AND rs2                         AND the contents of rs1 and rs2, storing the result in rd
 ANDI  - rd, rs1, imm    - rd <= rs1 AND imm                         AND immediate with the contents of rs1, storing the result in rd

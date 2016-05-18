@@ -10,7 +10,8 @@
 
 -- SLL	0100	Shift left logical
 -- SRL	0101	Shift right logical
--- SRA	0110	Shift right arithmetic
+-- SLA	0110	Shift left arithmetic (copy lsb)
+-- SRA	0111	Shift right arithmetic (copy msb)
 
 -- OR		1000	Logical OR
 -- AND	1001	Logical AND
@@ -69,7 +70,7 @@ architecture alu_32_bit_arch of alu_32_bit is
 			-- select signals
 			result_select	:	out	std_logic_vector(1 downto 0);
 			test_select		:	out	std_logic;
-			carry_select	:	out	std_logic
+			carry_select	:	out	std_logic_vector(1 downto 0)
 		);
 	end component;
 	
@@ -82,6 +83,23 @@ architecture alu_32_bit_arch of alu_32_bit is
 			
 			-- select signal
 			input_select		:	in		std_logic;
+			
+			-- output
+			out_signal			:	out	std_logic
+		);
+	end component;
+	
+	-- 4-input mux component
+	component mux_4_single_bit is
+		port (
+			-- inputs
+			in_signal_0			:	in		std_logic;
+			in_signal_1			:	in		std_logic;
+			in_signal_2			:	in		std_logic;
+			in_signal_3			:	in		std_logic;
+			
+			-- select signal
+			input_select		:	in		std_logic_vector(1 downto 0);
 			
 			-- output
 			out_signal			:	out	std_logic
@@ -127,13 +145,13 @@ architecture alu_32_bit_arch of alu_32_bit is
 		port (
 			-- inputs
 			a_32				:	in		std_logic_vector(31 downto 0);
-			b_32				:	in		std_logic_vector(31 downto 0);
 			
 			opcode			:	in		std_logic_vector(1 downto 0);
 			enable 			:	in		std_logic;
 			
 			-- outputs
-			result_32		:	out	std_logic_vector(31 downto 0)
+			result_32		:	out	std_logic_vector(31 downto 0);
+			carry_out		:	out	std_logic
 		);
 	end component;
 	
@@ -180,7 +198,7 @@ architecture alu_32_bit_arch of alu_32_bit is
 	-- multiplexer control signals
 	signal result_select			:	std_logic_vector(1 downto 0);
 	signal test_select			:	std_logic;
-	signal carry_select			:	std_logic;
+	signal carry_select			:	std_logic_vector(1 downto 0);
 	
 	-- functional block output signals
 	-- adder
@@ -189,6 +207,7 @@ architecture alu_32_bit_arch of alu_32_bit is
 	
 	-- shifter
 	signal shifter_result_32	:	std_logic_vector(31 downto 0);
+	signal shifter_carry_out	:	std_logic;
 	
 	-- logic
 	signal logic_result_32		:	std_logic_vector(31 downto 0);
@@ -235,11 +254,13 @@ begin
 	);
 	
 	-- carry result select mux instantiation
-	carry_mux	:	mux_2_single_bit
+	carry_mux	:	mux_4_single_bit
 	port map (
 		-- input signals
 		in_signal_0		=> adder_carry_out,
-		in_signal_1		=> '0',
+		in_signal_1		=> shifter_carry_out,
+		in_signal_2		=>	'0',
+		in_signal_3		=>	'0',
 		
 		-- input select
 		input_select	=>	carry_select,
@@ -286,14 +307,14 @@ begin
 	port map (
 		-- inputs
 		a_32				=> a_32,
-		b_32				=> b_32,
 		
 		-- opcode and enable
 		opcode			=> opcode_line,
 		enable			=> shifter_enable,
 		
 		-- outputs
-		result_32		=> shifter_result_32
+		result_32		=> shifter_result_32,
+		carry_out		=> shifter_carry_out
 	);
 	
 	-- logic instantiation

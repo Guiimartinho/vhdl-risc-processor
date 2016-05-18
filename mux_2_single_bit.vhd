@@ -32,7 +32,7 @@ begin
 			out_signal <= in_signal_0;
 		-- select 1 is input 1
 		elsif input_select = '1' then
-			out_signal <= in_signal_0;
+			out_signal <= in_signal_1;
 		-- otherwise invalid select signal, output 0
 		else
 			out_signal <= '0';

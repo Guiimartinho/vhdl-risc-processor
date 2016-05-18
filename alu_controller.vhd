@@ -24,7 +24,7 @@ entity alu_controller is
 		-- signals which control output select multiplexers
 		result_select	:	out	std_logic_vector(1 downto 0);
 		test_select		:	out	std_logic;
-		carry_select	:	out	std_logic
+		carry_select	:	out	std_logic_vector(1 downto 0)
 	);
 	
 end entity alu_controller;
@@ -47,8 +47,8 @@ begin
 				
 				-- select adder result, select carry result, select 0 for test
 				result_select <= "00";
-				carry_select <= '1';
-				test_select <= '0';
+				carry_select <= "00";
+				test_select <= '1';
 				
 			-- opcode 01xx is shifter functions
 			elsif opcode_in(3 downto 2) = "01" then
@@ -60,8 +60,8 @@ begin
 				
 				-- select shifter result, select 0 for carry and test
 				result_select <= "01";
-				carry_select <= '0';
-				test_select <= '0';
+				carry_select <= "01";
+				test_select <= '1';
 				
 			-- opcode 10xx is logic functions
 			elsif opcode_in(3 downto 2) = "10" then
@@ -73,8 +73,8 @@ begin
 				
 				-- select logic result, select 0 for carry and test
 				result_select <= "10";
-				carry_select <= '0';
-				test_select <= '0';
+				carry_select <= "11";
+				test_select <= '1';
 				
 			-- opcode 11xx is test functions
 			elsif opcode_in(3 downto 2) = "11" then
@@ -87,8 +87,8 @@ begin
 				-- select 0 result because tester does not produce a 32-bit result
 				-- select 0 for carry, select test result
 				result_select <= "11";
-				carry_select <= '0';
-				test_select <= '1';
+				carry_select <= "11";
+				test_select <= '0';
 			else
 				-- all lines 0
 				adder_enable <= '0';
@@ -97,7 +97,7 @@ begin
 				tester_enable <= '0';
 				
 				result_select <= "00";
-				carry_select <= '0';
+				carry_select <= "00";
 				test_select <= '0';
 			end if;
 				
@@ -111,7 +111,7 @@ begin
 			tester_enable <= '0';
 				
 			result_select <= "00";
-			carry_select <= '0';
+			carry_select <= "00";
 			test_select <= '0';
 			opcode_out <= "00";
 		end if;
