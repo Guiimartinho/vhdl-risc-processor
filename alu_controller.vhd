@@ -13,18 +13,19 @@ entity alu_controller is
 		
 		-- outputs
 		-- enable lines for the 4 functional blocks
-		adder_enable	:	out	std_logic;
-		shifter_enable	:	out	std_logic;
-		logic_enable	:	out	std_logic;
-		tester_enable	:	out	std_logic;
+		adder_enable		:	out	std_logic;
+		shifter_enable		:	out	std_logic;
+		logic_enable		:	out	std_logic;
+		tester_enable		:	out	std_logic;
 		
 		-- opcode which is passed to all 4 blocks
-		opcode_out		:	out	std_logic_vector(1 downto 0);
+		opcode_out			:	out	std_logic_vector(1 downto 0);
 		
 		-- signals which control output select multiplexers
-		result_select	:	out	std_logic_vector(1 downto 0);
-		test_select		:	out	std_logic;
-		carry_select	:	out	std_logic_vector(1 downto 0)
+		result_select		:	out	std_logic_vector(1 downto 0);
+		test_select			:	out	std_logic;
+		carry_select		:	out	std_logic_vector(1 downto 0);
+		overflow_select	:	out	std_logic
 	);
 	
 end entity alu_controller;
@@ -45,10 +46,11 @@ begin
 				logic_enable <= '0';
 				tester_enable <= '0';
 				
-				-- select adder result, select carry result, select 0 for test
+				-- select adder result, select carry result, select 1 for test, select
 				result_select <= "00";
 				carry_select <= "00";
 				test_select <= '1';
+				overflow_select <= '1';
 				
 			-- opcode 01xx is shifter functions
 			elsif opcode_in(3 downto 2) = "01" then
@@ -58,10 +60,11 @@ begin
 				logic_enable <= '0';
 				tester_enable <= '0';
 				
-				-- select shifter result, select 0 for carry and test
+				-- select shifter result, select 1 for carry and test
 				result_select <= "01";
 				carry_select <= "01";
 				test_select <= '1';
+				overflow_select <= '0';
 				
 			-- opcode 10xx is logic functions
 			elsif opcode_in(3 downto 2) = "10" then
@@ -71,10 +74,11 @@ begin
 				logic_enable <= '1';
 				tester_enable <= '0';
 				
-				-- select logic result, select 0 for carry and test
+				-- select logic result, select 2 for carry and 1 for test
 				result_select <= "10";
 				carry_select <= "11";
 				test_select <= '1';
+				overflow_select <= '0';
 				
 			-- opcode 11xx is test functions
 			elsif opcode_in(3 downto 2) = "11" then
@@ -85,10 +89,11 @@ begin
 				tester_enable <= '1';
 				
 				-- select 0 result because tester does not produce a 32-bit result
-				-- select 0 for carry, select test result
+				-- select 3 for carry, select 1 for test result
 				result_select <= "11";
 				carry_select <= "11";
 				test_select <= '0';
+				overflow_select <= '0';
 			else
 				-- all lines 0
 				adder_enable <= '0';
@@ -99,6 +104,7 @@ begin
 				result_select <= "00";
 				carry_select <= "00";
 				test_select <= '0';
+				overflow_select <= '0';
 			end if;
 				
 			-- set opcode out to last two bits of opcode in, to select functions within functional blocks
@@ -113,6 +119,7 @@ begin
 			result_select <= "00";
 			carry_select <= "00";
 			test_select <= '0';
+			overflow_select <= '0';
 			opcode_out <= "00";
 		end if;
 	end process alu_control;

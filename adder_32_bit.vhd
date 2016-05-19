@@ -11,71 +11,139 @@ entity adder_32_bit is
 		-- inputs
 		a_32		:	in		std_logic_vector(31 downto 0);
 		b_32		:	in		std_logic_vector(31 downto 0);
-		c_in		:	in		std_logic;
 		opcode	:	in		std_logic_vector(1 downto 0);
 		enable	:	in		std_logic;
-		sign		:	in		std_logic;
 		
 		-- outputs
 		sum_32	:	out	std_logic_vector(31 downto 0);
-		c_out		:	out	std_logic
+		carry		:	out	std_logic;
+		overflow	:	out	std_logic
 	);
 	
 end entity adder_32_bit;
 
 architecture adder_32_bit_arch of adder_32_bit is
-	-- defining signals
-	signal a_numeric		:	unsigned(32 downto 0);
-	signal b_numeric		:	unsigned(32 downto 0);
-	signal c_numeric		:	unsigned(32 downto 0);
-	signal tmp_sum			:	unsigned(32 downto 0);
+	-- signed values
+	signal a_signed		:	signed(31 downto 0);
+	signal b_signed		:	signed(31 downto 0);
+	signal sum_signed		:	signed(31 downto 0);
+	
+	-- unsigned values
+	signal a_unsigned		:	unsigned(32 downto 0);
+	signal b_unsigned		:	unsigned(32 downto 0);
+	signal sum_unsigned	:	unsigned(32 downto 0);
 	
 begin
 	-- design implementation
-	add	:	process(enable, opcode, a_32, b_32, c_in, a_numeric, b_numeric, c_numeric, tmp_sum)
+	add	:	process(enable, opcode, a_32, b_32, a_signed, b_signed, sum_signed, a_unsigned, b_unsigned, sum_unsigned)
 	begin
 		if enable = '1' then
-			-- converting inputs to unsigned vectors
-			a_numeric <= '0' & unsigned(a_32);
-			b_numeric <= '0' & unsigned(b_32);
+			-- converting inputs to signed vectors
+			a_signed <= signed(a_32);
+			b_signed <= signed(b_32);
 			
-			-- converting previous carry so that it can be added to a and b
-			c_numeric <= (0 => c_in, others => '0');
+			-- converting inputs to unsigned vectors
+			a_unsigned <= '0' & unsigned(a_32);
+			b_unsigned <= '0' & unsigned(b_32);
 		
 			-- performing addition/subtraction
-			-- opcode 00 is add without carry
+			-- opcode 00 is add signed
 			if opcode = "00" then
-				tmp_sum <= a_numeric + b_numeric;
-			-- opcode 01 is add with carry
+				-- calculating signed sum
+				sum_signed <= a_signed + b_signed;
+				-- set unsigned sum to 0
+				sum_unsigned <= (others => '0');
+				
+				-- if sign bit of sum is not the same as the sign bits of the two operands, set overflow flag
+				if a_signed(31) = '1' and b_signed(31) = '1' and sum_signed(31) = '0' then
+					overflow <= '1';
+				elsif a_signed(31) = '0' and b_signed(31) = '0' and sum_signed(31) = '1' then
+					overflow <= '1';
+				else
+					overflow <= '0';
+				end if;
+				-- carry out set to 0
+				carry <= '0';
+				
+			-- opcode 01 is add unsigned
 			elsif opcode = "01" then
-				tmp_sum <= a_numeric + b_numeric + c_numeric;
-			-- opcode 10 is subtract without borrow
+				-- set signed sum to 0
+				sum_signed <= (others => '0');
+				-- calculating unsigned sum
+				sum_unsigned <= a_unsigned + b_unsigned;
+				
+				-- msb of sum is carry out
+				carry <= sum_unsigned(32);
+				-- overflow flag set to 0
+				overflow <= '0';
+				
+			-- opcode 10 is subtract signed
 			elsif opcode = "10" then
-				tmp_sum <= a_numeric - b_numeric;
-			-- opcode 11 is subtract with borrow
+				-- calculate signed sum
+				sum_signed <= a_signed - b_signed;
+				-- set unsigned sum to 0
+				sum_unsigned <= (others => '0');
+				
+				-- if sign bit of sum is not the same as the sign bits of the two operands, set overflow flag
+				if a_signed(31) = '0' and b_signed(31) = '1' and sum_signed(31) = '1' then
+					overflow <= '1';
+				elsif a_signed(31) = '1' and b_signed(31) = '0' and sum_signed(31) = '0' then
+					overflow <= '1';
+				else
+					overflow <= '0';
+				end if;
+				-- carry out set to 0
+				carry <= '0';
+				
+			-- opcode 11 is subtract unsigned
 			elsif opcode = "11" then
-				tmp_sum <= a_numeric - b_numeric - c_numeric;
+				-- set signed sum to 0
+				sum_signed <= (others => '0');
+				-- calculate unsigned sum
+				sum_unsigned <= a_unsigned - b_unsigned;
+				
+				-- if b > a set carry to 1
+				if b_unsigned > a_unsigned then
+					carry <= '1';
+				else
+					carry <= '0';
+				end if;
+				-- overflow set to 0
+				overflow <= '0';
+				
 			-- otherwise error case, output 0
 			else
-				tmp_sum <= (others => '0');
+				sum_signed <= (others => '0');
+				sum_unsigned <= (others => '0');
+				overflow <= '0';
+				carry <= '0';
 			end if;
 			
-			-- overflow bit is msb of tmp_sum
-			c_out <= tmp_sum(32);
-			-- sum is the other 32 bits
-			sum_32 <= std_logic_vector(tmp_sum(31 downto 0));
+			if opcode(0) = '0' then
+				sum_32 <= std_logic_vector(sum_signed);
+			elsif opcode(0) = '1' then
+				sum_32 <= std_logic_vector(sum_unsigned(31 downto 0));
+			else
+				sum_32 <= (others => '0');
+			end if;
+			
 		-- adder disabled, all outputs and signals 0
 		else
 			-- resetting internal signals
-			a_numeric <= (others => '0');
-			b_numeric <= (others => '0');
-			c_numeric <= (others => '0');
-			tmp_sum <= (others => '0');
+			a_signed <= (others => '0');
+			b_signed <= (others => '0');
+			sum_signed <= (others => '0');
+			
+			a_unsigned <= (others => '0');
+			b_unsigned <= (others => '0');
+			sum_unsigned <= (others => '0');
 			
 			-- resetting outputs
-			c_out <= '0';
+			carry <= '0';
+			overflow <= '0';
 			sum_32 <= (others => '0');
 		end if;
+		
 	end process add;
 	
 end architecture adder_32_bit_arch;
