@@ -60,7 +60,7 @@ It uses a fixed-length, 32-bit instruction format, with six addressing modes:
     
 ##Registers##
 
-The VRISC architecture uses 5-bit register addressing, giving 32 register locations. 31 of these (0x01-0x1F) are general purpose registers which can be written to and read from. R0 (0x00) is hardcoded as having a value of 0, and cannot be written to. The registers store 32-bit signed two's complement values.
+The VRISC architecture uses 5-bit register addressing, giving 32 register locations. 31 of these (0x01-0x1F) are general purpose registers which can be written to and read from. R0 (0x00) is hardcoded as having a value of 0, and cannot be written to. The registers store 32-bit values.
 
 ##Instructions##
 
@@ -68,15 +68,15 @@ The processor's instruction set is composed of 44 instructions, split into four 
 
 ####Arithmetic and Logic####
 ```
-ADDR  - rd, rs1, rs2    - rd <= rs1 + rs2                           Add the contents of rs1 and rs2 together, storing the result in rd
-ADDI  - rd, rs1, imm    - rd <= rs1 + imm                           Add immediate to the contents of rs1, storing the result in rd
-ADDRC - rd, rs1, rs2    - rd <= rs1 + rs2 + overflow                Add the contents of rs1 and rs2 together, along with carry bit from the previous operation, storing the result in rd
-ADDIC - rd, rs1, imm    - rd <= rs1 + imm + overflow                Add immediate to the contents of rs1, along with carry bit from the previous operation, storing the result in rd
+ADDR  - rd, rs1, rs2    - rd <= rs1 + rs2                           Add signed values rs1 and rs2 together, storing the result in rd
+ADDI  - rd, rs1, imm    - rd <= rs1 + imm                           Add immediate to signed value rs1, storing the result in rd
+ADDUR - rd, rs1, rs2    - rd <= rs1 + rs2                           Add unsigned values rs1 and rs2 together, storing the result in rd
+ADDUI - rd, rs1, imm    - rd <= rs1 + imm                           Add immediate to unsigned value rs1, storing the result in rd
 
-SUBR  - rd, rs1, rs2    - rd <= rs1 - rs2                           Subtract the contents of rs2 from rs1, storing the result in rd
-SUBI  - rd, rs1, imm    - rd <= rs1 - imm                           Subtract immediate from contents of rs1, storing the result in rd
-SUBRB - rd, rs1, rs2    - rd <= rs1 - rs2 - overflow                Subtract the contents of rs2 from rs1, along with borrow bit from the previous operation, storing the result in rd
-SUBIB - rd, rs1, imm    - rd <= rs1 - imm - overflow                Subtract immediate from contents of rs1, along with borrow bit from the previous operation, storing the result in rd
+SUBR  - rd, rs1, rs2    - rd <= rs1 - rs2                           Subtract signed values rs2 from rs1, storing the result in rd
+SUBI  - rd, rs1, imm    - rd <= rs1 - imm                           Subtract immediate from signed value rs1, storing the result in rd
+SUBUR - rd, rs1, rs2    - rd <= rs1 - rs2                           Subtract unsigned values rs2 from rs1, storing the result in rd
+SUBUI - rd, rs1, imm    - rd <= rs1 - imm                           Subtract immediate from unsigned value rs1, storing the result in rd
 
 SLL   - rd, rs1			- rd <= (rs1 << 1) & 0						Shift the contents of rs1 left by one bit, with the lsb of the new value being 0, storing the result in rd
 SRL	  - rd, rs1			- rd <= 0 & (rs1 >> 1)						Shift the contents of rs1 right by one bit, with the msb of the new value being 0, storing the result in rd
