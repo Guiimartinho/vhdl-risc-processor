@@ -121,6 +121,8 @@ SETIC - addr            - pc <= addr                                Set pc to ad
 
 BRA   - offset          - pc <= pc + offset                         Branch to instruction at location pc + offset
 BRAT  - offset          - pc <= pc + offset if test=1               Branch to instruction at location pc + offset if test flag is 1
+BRAC  - offset          - pc <= pc + offset if carry=1              Branch to instruction at pc + offset if carry flag is 1
+BRAO  - offset          - pc <= pc + offset if overflow=1           Branch to instruction at pc + offset if overflow flag is 1
 
 CALL  - offset          - stack[top] <= pc + 4, pc <= pc + offset	Branch to subroutine at location pc + offset, placing the return address onto the stack
 CALLR - ra              - stack[top] <= pc + 4, pc <= ra            Branch to subroutine at location given by the value of ra, placing the return address onto the stack
