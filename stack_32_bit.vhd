@@ -10,8 +10,9 @@ entity stack_32_bit is
 		-- top of stack input
 		stack_top_write	:	in		std_logic_vector(31 downto 0);
 		
-		-- push enable, clock and reset
+		-- push enable, clock_enable, clock and reset
 		push					:	in		std_logic;
+		clk_enable			:	in		std_logic;
 		clk					:	in		std_logic;
 		rst					:	in		std_logic;
 		
@@ -47,37 +48,39 @@ begin
 			next_5 <= (others => '0');
 			next_6 <= (others => '0');
 		else
-			if rising_edge(clk) then
-				if push = '1' then
-					-- copying registers down
-					next_6 <= next_5;
-					next_5 <= next_4;
-					next_4 <= next_3;
-					next_3 <= next_2;
-					next_2 <= next_1;
-					next_1 <= next_0;
-					next_0 <= top;
-					
-					-- pushing new value to stack top
-					top <= stack_top_write;
-					
-					
-				else
-					-- copying next_0 to stack top
-					top <= next_0;
-					
-					-- copying registers up
-					next_0 <= next_1;
-					next_1 <= next_2;
-					next_2 <= next_3;
-					next_3 <= next_4;
-					next_4 <= next_5;
-					next_5 <= next_6;
-					
-					-- clearing next_6
-					next_6 <= (others => '0');
-					
-					stack_top_read <= top;
+			if clk_enable = '1' then
+				if rising_edge(clk) then
+					if push = '1' then
+						-- copying registers down
+						next_6 <= next_5;
+						next_5 <= next_4;
+						next_4 <= next_3;
+						next_3 <= next_2;
+						next_2 <= next_1;
+						next_1 <= next_0;
+						next_0 <= top;
+						
+						-- pushing new value to stack top
+						top <= stack_top_write;
+						
+						
+					else
+						-- copying next_0 to stack top
+						top <= next_0;
+						
+						-- copying registers up
+						next_0 <= next_1;
+						next_1 <= next_2;
+						next_2 <= next_3;
+						next_3 <= next_4;
+						next_4 <= next_5;
+						next_5 <= next_6;
+						
+						-- clearing next_6
+						next_6 <= (others => '0');
+						
+						stack_top_read <= top;
+					end if;
 				end if;
 			end if;
 		end if;

@@ -17,9 +17,6 @@ entity pc_controller is
 		-- opcode input
 		opcode				:	in		std_logic_vector(2 downto 0);
 		
-		-- clock input
-		clk					:	in		std_logic;
-		
 		-- stack push/pop signal
 		stack_push			:	out	std_logic;
 		
