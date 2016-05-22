@@ -35,7 +35,7 @@ architecture pc_controller_arch of pc_controller is
 	-- this circuit requires no internal signals
 	
 begin
-	pc_control		:	process(clk, opcode)
+	pc_control		:	process(opcode)
 	begin
 		-- opcode 000 is increment pc by 4
 		if opcode = "000" then

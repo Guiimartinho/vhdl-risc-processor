@@ -34,7 +34,7 @@ architecture stack_32_bit_arch of stack_32_bit is
 	
 begin
 	-- stack process
-	stack		:	process(rst, clk)
+	stack		:	process(rst, clk_enable, clk)
 	begin
 		-- on async reset high, set all stack registers to 0
 		if rst = '1' then
