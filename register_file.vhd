@@ -181,3 +181,48 @@ begin
 				-- exception case
 				when others		=> b_data <= r00;
 			end case;
+			
+			-- writing to registers
+			if rising_edge(wr_clk) then 
+				if wr_enable = '1' then
+					-- case statement for writing to register
+					case wr_addr is
+						-- note exclusion of address 00000, r00 cannot be written to
+						when "00001"	=> r01 <= wr_data;
+						when "00010"	=> r02 <= wr_data;
+						when "00011"	=> r03 <= wr_data;
+						when "00100"	=> r04 <= wr_data;
+						when "00101"	=> r05 <= wr_data;
+						when "00110"	=> r06 <= wr_data;
+						when "00111"	=> r07 <= wr_data;
+						when "01000"	=> r08 <= wr_data;
+						when "01001"	=> r09 <= wr_data;
+						when "01010"	=> r10 <= wr_data;
+						when "01011"	=> r11 <= wr_data;
+						when "01100"	=> r12 <= wr_data;
+						when "01101"	=> r13 <= wr_data;
+						when "01110"	=> r14 <= wr_data;
+						when "01111"	=> r15 <= wr_data;
+						when "10000"	=> r16 <= wr_data;
+						when "10001"	=> r17 <= wr_data;
+						when "10010"	=> r18 <= wr_data;
+						when "10011"	=> r19 <= wr_data;
+						when "10100"	=> r20 <= wr_data;
+						when "10101"	=> r21 <= wr_data;
+						when "10110"	=> r22 <= wr_data;
+						when "10111"	=> r23 <= wr_data;
+						when "11000"	=> r24 <= wr_data;
+						when "11001"	=> r25 <= wr_data;
+						when "11010"	=> r26 <= wr_data;
+						when "11011"	=> r27 <= wr_data;
+						when "11100"	=> r28 <= wr_data;
+						when "11101"	=> r29 <= wr_data;
+						when "11110"	=> r30 <= wr_data;
+						when "11111"	=> r31 <= wr_data;
+					end case;
+				end if;
+			end if;
+		end if;
+	
+	end process registers;
+end architecture register_file_arch;
