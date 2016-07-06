@@ -34,11 +34,10 @@ architecture stack_32_bit_arch of stack_32_bit is
 	
 begin
 	-- stack process
-	stack		:	process(rst, clk_enable, clk)
+	stack		:	process(rst, clk_enable, clk, top)
 	begin
 		-- on async reset high, set all stack registers to 0
 		if rst = '1' then
-			stack_top_read <= (others => '0');
 			top <= (others => '0');
 			next_0 <= (others => '0');
 			next_1 <= (others => '0');
@@ -78,12 +77,11 @@ begin
 						
 						-- clearing next_6
 						next_6 <= (others => '0');
-						
-						stack_top_read <= top;
 					end if;
 				end if;
 			end if;
 		end if;
+		stack_top_read <= top;
 	end process stack;
 
 end architecture stack_32_bit_arch;
