@@ -69,7 +69,7 @@ VRISC uses a block-based cache for instructions. Instructions are loaded in bloc
 The architecture uses a manual cache - or 'scratchpad' - for data, which can be written to and read from using the same instructions as for external memory. Data memory is divided into three segments - I/O, scratchpad, and external. The memory controller on the chip maps the memory as below:
 ```
 0x00000000-0x0000000F - 16 8-bit I/O ports (can be grouped together to form bigger ports)
-0x00000010-0x00000410 - 1024 bytes scratchpad memory
+0x00000010-0x00000410 - 1024 bytes on-chip scratchpad memory
 0x00000411-0xFFFFFFFF - external memory
 ```
 These memory locations can all be written to and read from using the memory access instructions detailed in the next section. 
