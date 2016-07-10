@@ -59,7 +59,7 @@ architecture memory_interface_arch of memory_interface is
 	
 	-- bytes, counter
 	signal bytes			:	integer;
-	signal count			:	integer := '0';
+	signal count			:	integer := 0;
 	
 	-- external memory access active
 	signal ext_active		:	std_logic;
@@ -72,7 +72,7 @@ begin
 	interface	:	process(clk)
 	begin
 		-- on reset high, reset internal counter, block address and signal bits
-		if reset = '1' then
+		if rst = '1' then
 			block_addr <= 0;
 			bytes <= 0;
 			mem_addr <= 0;
