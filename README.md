@@ -62,6 +62,18 @@ It uses a fixed-length, 32-bit instruction format, with six addressing modes:
 
 The VRISC architecture uses 5-bit register addressing, giving 32 register locations. 31 of these (0x01-0x1F) are general purpose registers which can be written to and read from. R0 (0x00) is hardcoded as having a value of 0, and cannot be written to. The registers store 32-bit values.
 
+##Memory##
+
+VRISC uses a block-based cache for instructions. Instructions are loaded in blocks of 512 into on-chip SRAM memory. Blocks are loaded automatically when the program counter address changes to an address not stored in the cache. This can happen as the result of a program counter increment, a branch instruction, or the SETIR and SETIC instructions, which set the program counter to the given address, allowing a block to be loaded manually.
+
+The architecture uses a manual cache - or 'scratchpad' - for data, which can be written to and read from using the same instructions as for external memory. Data memory is divided into three segments - I/O, scratchpad, and external. The memory controller on the chip maps the memory as below:
+```
+0x00000000-0x0000000F - 16 8-bit I/O ports (can be grouped together to form bigger ports)
+0x00000010-0x00000410 - 1024 bytes scratchpad memory
+0x00000411-0xFFFFFFFF - external memory
+```
+These memory locations can all be written to and read from using the memory access instructions detailed in the next section. 
+
 ##Instructions##
 
 The processor's instruction set is composed of 46 instructions, split into four categories - Arithmetic and Logic, Memory Access, Control, and Miscellaneous. In the table below, each instruction is given with its mnemonic, syntax, RTL description and functional description.
