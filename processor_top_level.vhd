@@ -34,6 +34,31 @@ entity processor_top_level is
 	);
 end entity processor_top_level;
 
+architecture processor_top_level_arch of processor_top_level is
+	-- component declarations
+	
+	-- arithemtic & logic unit
+	component alu_32_bit is
+		port (
+			-- operand inputs
+			a_32				:	in		std_logic_vector(31 downto 0);
+			b_32				:	in		std_logic_vector(31 downto 0);
+			
+			-- opcode and enable inputs
+			opcode			:	in		std_logic_vector(3 downto 0);
+			enable			:	in		std_logic;
+			
+			-- result output
+			result_32		:	out	std_logic_vector(31 downto 0);
+			
+			-- test and carry outputs
+			test_out			:	out	std_logic;
+			carry_out		:	out	std_logic;
+			overflow_out	:	out	std_logic
+		);
+	end component;
+
+
 
 		
 		
