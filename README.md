@@ -53,8 +53,9 @@ It uses a fixed-length, 32-bit instruction format, with six addressing modes:
   <tr>
     <td>Register Block Addressing</td>
     <td>opcode - 6 bits</td>
+    <td>unused - 5 bits</td>
     <td>ra - 5 bits</td>
-    <td colspan="3">unused - 21 bits</td>
+    <td colspan="2">unused - 21 bits</td>
   </tr>
 </table>
     
