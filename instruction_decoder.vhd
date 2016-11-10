@@ -30,6 +30,10 @@ entity instruction_decoder is
 		-- external memory opcode
 		mem_opcode		:	out	std_logic_vector(2 downto 0);
 		
+		-- ALU control signals
+		alu_en			:	out	std_logic;
+		alu_opcode		:	out	std_logic_vector(3 downto 0);
+		
 		-- register writeback control signals
 		wb_en				:	out	std_logic; -- 0: reg_file will write on next clk, 1: reg_file will not write on next clk
 		wb_addr			:	out	std_logic_vector(4 downto 0);
@@ -73,7 +77,7 @@ begin
 			end if;
 			
 			-- update register addresses from instr
-			reg_addr_a <= instr(21 downto 16);
+			reg_addr_a <= instr(20 downto 16);
 			reg_addr_b <= instr(15 downto 11);
 			
 			-- update immediate value
@@ -82,9 +86,100 @@ begin
 			-- update offset value
 			offset <= instr(25 downto 0);
 			
+			-- update wr_addr value
+			wr_addr <= instr(25 downto 21);
+			
 			-- *** INCOMPLETE DEFINITION ***
 			-- add definitions for outputs based on opcode
 			-- after opcodes have been defined
+			
+			-- case statement for assigning values to outputs
+			-- based on opcode
+			case instr(31 downto 26) is
+				-- 0x00 NO OPERATION
+				-- ALU addition with no wb
+				when "000000" =>
+					op_select_b <= '0';
+					
+					alu_en <= '0';
+					alu_opcode <= "0000";
+					
+					mem_opcode <= "000";
+					
+					wb_en <= '0';
+					wb_select <= '0';
+					
+					pc_select <= "00";
+					pc_opcode <= "000";
+					cond_opcode <= "00";
+					
+				-- 0x01 ADD REGISTER SIGNED
+				when "000001" =>
+					op_select_b <= '0';
+					
+					alu_en <= '1';
+					alu_opcode <= "0000";
+					
+					mem_opcode <= "000";
+					
+					wb_en <= '1';
+					wb_select <= '0';
+					
+					pc_select <= "00";
+					pc_opcode <= "000";
+					cond_opcode <= "00";
+					
+				-- 0x02 ADD IMMEDIATE SIGNED
+				when "000010" =>
+					op_select_b <= '1';
+					
+					alu_en <= '1';
+					alu_opcode <= "0000";
+					
+					mem_opcode <= "000";
+					
+					wb_en <= '1';
+					wb_select <= '0';
+					
+					pc_select <= "00";
+					pc_opcode <= "000";
+					cond_opcode <= "00";
+					
+				-- 0x03 ADD REGISTER UNSIGNED
+				when "000011" =>
+					op_select_b <= '0';
+					
+					alu_en <= '1';
+					alu_opcode <= "0001";
+					
+					mem_opcode <= "000";
+					
+					wb_en <= '1';
+					wb_select <= '0';
+					
+					pc_select <= "00";
+					pc_opcode <= "000";
+					cond_opcode <= "00";
+					
+				-- 0x04 ADD IMMEDIATE UNSIGNED
+				when "000100" =>
+					op_select_b <= '1';
+					
+					alu_en <= '1';
+					alu_opcode <= "0001";
+					
+					mem_opcode <= "000";
+					
+					wb_en <= '1';
+					wb_select <= '0';
+					
+					pc_select <= "00";
+					pc_opcode <= "000";
+					cond_opcode <= "00";
+					
+					
+					
+			end case;
 			
 			-- push stack down
 			reg_stack_bottom <= reg_stack_top;
