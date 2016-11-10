@@ -81,70 +81,70 @@ The processor's instruction set is composed of 46 instructions, split into four 
 
 ####Arithmetic and Logic####
 ```
-ADDR  - rd, rs1, rs2    - rd <= rs1 + rs2                           Add signed values rs1 and rs2 together, storing the result in rd
-ADDI  - rd, rs1, imm    - rd <= rs1 + imm                           Add immediate to signed value rs1, storing the result in rd
-ADDUR - rd, rs1, rs2    - rd <= rs1 + rs2                           Add unsigned values rs1 and rs2 together, storing the result in rd
-ADDUI - rd, rs1, imm    - rd <= rs1 + imm                           Add immediate to unsigned value rs1, storing the result in rd
+0x01 - ADDR  - rd, rs1, rs2    - rd <= rs1 + rs2                           Add signed values rs1 and rs2 together, storing the result in rd
+0x02 - ADDI  - rd, rs1, imm    - rd <= rs1 + imm                           Add immediate to signed value rs1, storing the result in rd
+0x03 - ADDUR - rd, rs1, rs2    - rd <= rs1 + rs2                           Add unsigned values rs1 and rs2 together, storing the result in rd
+0x04 - ADDUI - rd, rs1, imm    - rd <= rs1 + imm                           Add immediate to unsigned value rs1, storing the result in rd
 
-SUBR  - rd, rs1, rs2    - rd <= rs1 - rs2                           Subtract signed values rs2 from rs1, storing the result in rd
-SUBI  - rd, rs1, imm    - rd <= rs1 - imm                           Subtract immediate from signed value rs1, storing the result in rd
-SUBUR - rd, rs1, rs2    - rd <= rs1 - rs2                           Subtract unsigned values rs2 from rs1, storing the result in rd
-SUBUI - rd, rs1, imm    - rd <= rs1 - imm                           Subtract immediate from unsigned value rs1, storing the result in rd
+0x05 - SUBR  - rd, rs1, rs2    - rd <= rs1 - rs2                           Subtract signed values rs2 from rs1, storing the result in rd
+0x06 - SUBI  - rd, rs1, imm    - rd <= rs1 - imm                           Subtract immediate from signed value rs1, storing the result in rd
+0x07 - SUBUR - rd, rs1, rs2    - rd <= rs1 - rs2                           Subtract unsigned values rs2 from rs1, storing the result in rd
+0x08 - SUBUI - rd, rs1, imm    - rd <= rs1 - imm                           Subtract immediate from unsigned value rs1, storing the result in rd
 
-SLL   - rd, rs1			- rd <= (rs1 << 1) & 0						Shift the contents of rs1 left by one bit, with the lsb of the new value being 0, storing the result in rd
-SRL	  - rd, rs1			- rd <= 0 & (rs1 >> 1)						Shift the contents of rs1 right by one bit, with the msb of the new value being 0, storing the result in rd
-SLA	  - rd, rs1			- rd <= (rs1 << 1) & lsb					Shift the contents of rs1 left by one bit, maintaining the lsb of the old value, storing the result in rd
-SRA	  - rd, rs1			- rd <= msb & (rs1 >> 1)					Shift the contents of rs1 right by one bit, maintaining the msb of the old value, storing the result in rd
+0x09 - SLL   - rd, rs1			- rd <= (rs1 << 1) & 0						Shift the contents of rs1 left by one bit, with the lsb of the new value being 0, storing the result in rd
+0x0A - SRL	  - rd, rs1			- rd <= 0 & (rs1 >> 1)						Shift the contents of rs1 right by one bit, with the msb of the new value being 0, storing the result in rd
+0x0B - SLA	  - rd, rs1			- rd <= (rs1 << 1) & lsb					Shift the contents of rs1 left by one bit, maintaining the lsb of the old value, storing the result in rd
+0x0C - SRA	  - rd, rs1			- rd <= msb & (rs1 >> 1)					Shift the contents of rs1 right by one bit, maintaining the msb of the old value, storing the result in rd
 
-ANDR  - rd, rs1, rs2    - rd <= rs1 AND rs2                         AND the contents of rs1 and rs2, storing the result in rd
-ANDI  - rd, rs1, imm    - rd <= rs1 AND imm                         AND immediate with the contents of rs1, storing the result in rd
-ORR   - rd, rs1, rs2    - rd <= rs1 OR rs2                          OR the contents of rs1 and rs2, storing the result in rd
-ORI   - rd, rs1, imm    - rd <= rs1 OR imm                          OR immediate with the contents of rs1, storing the result in rd
-XORR  - rd, rs1, rs2    - rd <= rs1 XOR rs2                         XOR the contents of rs1 and rs2, storing the result in rd
-XORI  - rd, rs1, imm    - rd <= rs1 XOR imm                         XOR immediate with the contents of rs1, storing the result in rd
-NOT   - rd, rs1         - rd <= NOT rs1                             NOT the contents of rs1, storing the result in rd
+0x0D - ANDR  - rd, rs1, rs2    - rd <= rs1 AND rs2                         AND the contents of rs1 and rs2, storing the result in rd
+0x0E - ANDI  - rd, rs1, imm    - rd <= rs1 AND imm                         AND immediate with the contents of rs1, storing the result in rd
+0x0F - ORR   - rd, rs1, rs2    - rd <= rs1 OR rs2                          OR the contents of rs1 and rs2, storing the result in rd
+0x10 - ORI   - rd, rs1, imm    - rd <= rs1 OR imm                          OR immediate with the contents of rs1, storing the result in rd
+0x11 - XORR  - rd, rs1, rs2    - rd <= rs1 XOR rs2                         XOR the contents of rs1 and rs2, storing the result in rd
+0x12 - XORI  - rd, rs1, imm    - rd <= rs1 XOR imm                         XOR immediate with the contents of rs1, storing the result in rd
+0x13 - NOT   - rd, rs1         - rd <= NOT rs1                             NOT the contents of rs1, storing the result in rd
 
-ZERO  - rs1             - test <= 1 if rs1=0                        Update test flag with 1 if the value of rs1 is equal to zero
-GRTR  - rs1, rs2        - test <= 1 if rs1>rs2                      Update test flag with 1 if the value of rs1 is greater than rs2
-GRTI  - rs1, imm        - test <= 1 if rs1>imm                      Update test flag with 1 if the value of rs1 is greater than immediate
-LESSR - rs1, rs2        - test <= 1 if rs1<rs2                      Update test flag with 1 if the value of rs1 is less than rs2
-LESSI - rs1, imm        - test <= 1 if rs1<imm                      Update test flag with 1 if the value of rs1 is less than immediate
-EQUR  - rs1, rs2        - test <= 1 if rs1=rs2                      Update test flag with 1 if the value of rs1 is equal to rs2
-EQUI  - rs1, imm        - test <= 1 if rs1=imm                      Update test flag with 1 if the value of rs1 is equal to immediate
+0x14 - ZERO  - rs1             - test <= 1 if rs1=0                        Update test flag with 1 if the value of rs1 is equal to zero
+0x15 - GRTR  - rs1, rs2        - test <= 1 if rs1>rs2                      Update test flag with 1 if the value of rs1 is greater than rs2
+0x16 - GRTI  - rs1, imm        - test <= 1 if rs1>imm                      Update test flag with 1 if the value of rs1 is greater than immediate
+0x17 - LESSR - rs1, rs2        - test <= 1 if rs1<rs2                      Update test flag with 1 if the value of rs1 is less than rs2
+0x18 - LESSI - rs1, imm        - test <= 1 if rs1<imm                      Update test flag with 1 if the value of rs1 is less than immediate
+0x19 - EQUR  - rs1, rs2        - test <= 1 if rs1=rs2                      Update test flag with 1 if the value of rs1 is equal to rs2
+0x1A - EQUI  - rs1, imm        - test <= 1 if rs1=imm                      Update test flag with 1 if the value of rs1 is equal to immediate
 ```
 
 ####Memory Access####
 ```
-SETMR - ra              - block <= ra                               Set the current operating memory block address to the value of ra
-SETMC - addr            - block <= addr                             Set the current operating memory block address to addr
+0x20 - SETMR - ra              - block <= ra                               Set the current operating memory block address to the value of ra
+0x21 - SETMC - addr            - block <= addr                             Set the current operating memory block address to addr
 
-LDB   - rd, addr, ro    - rd <= memory_byte[block + addr + ro]      Load byte at location addr + ro in memory into rd
-LDHW  - rd, addr, ro    - rd <= memory_hword[block + addr + ro]     Load half-word at location addr + ro in memory into rd
-LDW   - rd, addr, ro    - rd <= memory_word[block + addr + ro]      Load word at location addr + ro in memory into rd
+0x22 - LDB   - rd, addr, ro    - rd <= memory_byte[block + addr + ro]      Load byte at location addr + ro in memory into rd
+0x23 - LDHW  - rd, addr, ro    - rd <= memory_hword[block + addr + ro]     Load half-word at location addr + ro in memory into rd
+0x24 - LDW   - rd, addr, ro    - rd <= memory_word[block + addr + ro]      Load word at location addr + ro in memory into rd
 
-STB   - rs, addr, r0    - memory_byte[block + addr + ro] <= rs      Store byte in rs at location addr + ro in memory
-STHW  - rs, addr, r0    - memory_hword[block + addr + ro] <= rs     Store half-word in rs at location addr + ro in memory
-STW   - rs, addr, r0    - memory_word[block + addr + ro] <= rs      Store word in rs at location addr + ro in memory
+0x25 - STB   - rs, addr, r0    - memory_byte[block + addr + ro] <= rs      Store byte in rs at location addr + ro in memory
+0x26 - STHW  - rs, addr, r0    - memory_hword[block + addr + ro] <= rs     Store half-word in rs at location addr + ro in memory
+0x27 - STW   - rs, addr, r0    - memory_word[block + addr + ro] <= rs      Store word in rs at location addr + ro in memory
 ```
 
 ####Control####
 ```
-SETIR - ra              - pc <= ra                                  Set pc to the value of ra
-SETIC - addr            - pc <= addr                                Set pc to addr
+0x28 - SETIR - ra              - pc <= ra                                  Set pc to the value of ra
+0x29 - SETIC - addr            - pc <= addr                                Set pc to addr
 
-BRA   - offset          - pc <= pc + offset                         Branch to instruction at location pc + offset
-BRAT  - offset          - pc <= pc + offset if test=1               Branch to instruction at location pc + offset if test flag is 1
-BRAC  - offset          - pc <= pc + offset if carry=1              Branch to instruction at pc + offset if carry flag is 1
-BRAO  - offset          - pc <= pc + offset if overflow=1           Branch to instruction at pc + offset if overflow flag is 1
+0x2A - BRA   - offset          - pc <= pc + offset                         Branch to instruction at location pc + offset
+0x2B - BRAT  - offset          - pc <= pc + offset if test=1               Branch to instruction at location pc + offset if test flag is 1
+0x2C - BRAC  - offset          - pc <= pc + offset if carry=1              Branch to instruction at pc + offset if carry flag is 1
+0x2D - BRAO  - offset          - pc <= pc + offset if overflow=1           Branch to instruction at pc + offset if overflow flag is 1
 
-CALL  - offset          - stack[top] <= pc + 4, pc <= pc + offset	Branch to subroutine at location pc + offset, placing the return address onto the stack
-CALLR - ra              - stack[top] <= pc + 4, pc <= ra            Branch to subroutine at location given by the value of ra, placing the return address onto the stack
-CALLB - addr            - stack[top] <= pc + 4, pc <= addr          Branch to subroutine at location addr, placing the return address onto the stack
-RET   -                 - pc <= stack[top]                          Return to address on the top of the stack
+0x2E - CALL  - offset          - stack[top] <= pc + 4, pc <= pc + offset	Branch to subroutine at location pc + offset, placing the return address onto the stack
+0x2F - CALLR - ra              - stack[top] <= pc + 4, pc <= ra            Branch to subroutine at location given by the value of ra, placing the return address onto the stack
+0x30 - CALLB - addr            - stack[top] <= pc + 4, pc <= addr          Branch to subroutine at location addr, placing the return address onto the stack
+0x31 - RET   -                 - pc <= stack[top]                          Return to address on the top of the stack
 ```
 
 ####Miscellaneous####
 ```
-HALT  -                 -                                           Suspends processor operation indefinitely
-NOP   -                 -                                           Stalls processor operation for one clock cycle
+0x3F - HALT  -                 -                                           Suspends processor operation indefinitely
+0x00 - NOP   -                 -                                           Stalls processor operation for one clock cycle
 ```
