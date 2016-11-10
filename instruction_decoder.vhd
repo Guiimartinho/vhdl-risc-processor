@@ -177,7 +177,69 @@ begin
 					pc_opcode <= "000";
 					cond_opcode <= "00";
 					
+				-- 0x05 SUB REGISTER SIGNED
+				when "000101" =>
+					op_select_b <= '0';
 					
+					alu_en <= '1';
+					alu_opcode <= "0010";
+					
+					mem_opcode <= "000";
+					
+					wb_en <= '1';
+					wb_select <= '0';
+					
+					pc_select <= "00";
+					pc_opcode <= "000";
+					cond_opcode <= "00";
+					
+				-- 0x06 SUB IMMEDIATE SIGNED
+				when "000110" =>
+					op_select_b <= '1';
+					
+					alu_en <= '1';
+					alu_opcode <= "0010";
+					
+					mem_opcode <= "000";
+					
+					wb_en <= '1';
+					wb_select <= '0';
+					
+					pc_select <= "00";
+					pc_opcode <= "000";
+					cond_opcode <= "00";
+					
+				-- 0x07 SUB REGISTER UNSIGNED
+				when "000111" =>
+					op_select_b <= '0';
+					
+					alu_en <= '1';
+					alu_opcode <= "0011";
+					
+					mem_opcode <= "000";
+					
+					wb_en <= '1';
+					wb_select <= '0';
+					
+					pc_select <= "00";
+					pc_opcode <= "000";
+					cond_opcode <= "00";
+					
+				-- 0x08 SUB IMMEDIATE UNSIGNED
+				when "001000" =>
+					op_select_b <= '1';
+					
+					alu_en <= '1';
+					alu_opcode <= "0011";
+					
+					mem_opcode <= "000";
+					
+					wb_en <= '1';
+					wb_select <= '0';
+					
+					pc_select <= "00";
+					pc_opcode <= "000";
+					cond_opcode <= "00";
 					
 			end case;
 			
