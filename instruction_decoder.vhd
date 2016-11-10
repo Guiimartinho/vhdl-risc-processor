@@ -24,6 +24,9 @@ entity instruction_decoder is
 		-- immediate value from instruction
 		imm_16_bit		:	out	std_logic_vector(15 downto 0);
 		
+		-- offset value for program counter
+		offset			:	out	std_logic_vector(25 downto 0);
+		
 		-- external memory opcode
 		mem_opcode		:	out	std_logic_vector(2 downto 0);
 		
@@ -33,7 +36,7 @@ entity instruction_decoder is
 		wb_select		:	out	std_logic; -- 0: select ALU result for wb, 1: select mem_read for wb
 		
 		-- pc value select signal
-		pc_select		:	out 	std_logic; -- 0: reg_data_a, 1: imm_16_bit
+		pc_select		:	out 	std_logic_vector(1 downto 0); -- 00: reg_data_a, 01: imm_16_bit, 11: offset
 		
 		-- pc opcode
 		pc_opcode		:	out	std_logic_vector(2 downto 0);
@@ -42,6 +45,56 @@ entity instruction_decoder is
 		cond_opcode		:	out	std_logic_vector(1 downto 0)
 	);
 end entity instruction_decoder;
+
+architecture instruction_decoder_arch of instruction_decoder is
+	-- internal signal declarations
+	
+	-- register address stack signals
+	-- this is a stack of depth 2 which stores the register addresses of operand a
+	-- if the bottom value of this stack is the current reg_addr_a, then prev_result needs to be selected
+	-- and not reg_data_a as this will be the wrong value (reg[a] will soon change on writeback)
+	signal reg_stack_top		:		std_logic_vector(4 downto 0);
+	signal reg_stack_bottom	:		std_logic_vector(4 downto 0);
+	
+begin
+	-- design implementation
+	-- process to define decoding of instruction
+	decode	:	process(clk)
+	begin
+		-- decode on rising edge of clk
+		if rising_edge(clk) then
+			-- first check bottom of stack
+			-- if current reg_addr_a value is equal to reg_stack_bottom
+			-- op_select_a <= 0 because previous result must be used (current value of reg[a] is out of date)
+			if reg_addr_a = reg_stack_bottom then
+				op_select_a <= '0';
+			else
+				op_select_a <= '1';
+			end if;
+			
+			-- update register addresses from instr
+			reg_addr_a <= instr(21 downto 16);
+			reg_addr_b <= instr(15 downto 11);
+			
+			-- update immediate value
+			imm_16_bit <= instr(15 downto 0);
+			
+			-- update offset value
+			offset <= instr(25 downto 0);
+			
+			-- *** INCOMPLETE DEFINITION ***
+			-- add definitions for outputs based on opcode
+			-- after opcodes have been defined
+			
+			-- push stack down
+			reg_stack_bottom <= reg_stack_top;
+			reg_stack_top <= reg_addr_a;
+		end if;
+	end process decode;
+end architecture instruction_decoder_arch;
+			
+			
+		
 		
 		
 		
