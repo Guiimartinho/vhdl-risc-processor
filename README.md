@@ -1,10 +1,10 @@
-#VRISC (VHDL-RISC) Architecture#
+#VRISC (VHDL-RISC) Architecture
 
-##Copyright and License##
+##Copyright and License
 All code and designs contained in this repository are (c) copyright 2016 Jay Valentine, and are released under the MIT License.
 See LICENSE file for more details.
 
-##Overview##
+##Overview
 VRISC is a 32-bit, little-endian Harvard architecture RISC processor. <br>
 It uses a fixed-length, 32-bit instruction format, with six addressing modes:
 <table>
@@ -59,11 +59,11 @@ It uses a fixed-length, 32-bit instruction format, with six addressing modes:
   </tr>
 </table>
     
-##Registers##
+##Registers
 
 The VRISC architecture uses 5-bit register addressing, giving 32 register locations. 31 of these (0x01-0x1F) are general purpose registers which can be written to and read from. R0 (0x00) is hardcoded as having a value of 0, and cannot be written to. The registers store 32-bit values.
 
-##Memory##
+##Memory
 
 VRISC uses a block-based cache for instructions. Instructions are loaded in blocks of 512 into on-chip SRAM memory. Blocks are loaded automatically when the program counter address changes to an address not stored in the cache. This can happen as the result of a program counter increment, a branch instruction, or the SETIR and SETIC instructions, which set the program counter to the given address, allowing a block to be loaded manually.
 
@@ -75,11 +75,11 @@ The architecture uses a manual cache - or 'scratchpad' - for data, which can be 
 ```
 These memory locations can all be written to and read from using the memory access instructions detailed in the next section. 
 
-##Instructions##
+##Instructions
 
 The processor's instruction set is composed of 46 instructions, split into four categories - Arithmetic and Logic, Memory Access, Control, and Miscellaneous. In the table below, each instruction is given with its mnemonic, syntax, RTL description and functional description.
 
-####Arithmetic and Logic####
+####Arithmetic and Logic
 ```
 0x01 - ADDR  - rd, rs1, rs2    - rd <= rs1 + rs2                           Add signed values rs1 and rs2 together, storing the result in rd
 0x02 - ADDI  - rd, rs1, imm    - rd <= rs1 + imm                           Add immediate to signed value rs1, storing the result in rd
@@ -113,7 +113,7 @@ The processor's instruction set is composed of 46 instructions, split into four 
 0x1A - EQUI  - rs1, imm        - test <= 1 if rs1=imm                      Update test flag with 1 if the value of rs1 is equal to immediate
 ```
 
-####Memory Access####
+####Memory Access
 ```
 0x20 - SETMR - ra              - block <= ra                               Set the current operating memory block address to the value of ra
 0x21 - SETMC - addr            - block <= addr                             Set the current operating memory block address to addr
@@ -127,7 +127,7 @@ The processor's instruction set is composed of 46 instructions, split into four 
 0x27 - STW   - rs, addr, r0    - memory_word[block + addr + ro] <= rs      Store word in rs at location addr + ro in memory
 ```
 
-####Control####
+####Control
 ```
 0x28 - SETIR - ra              - pc <= ra                                  Set pc to the value of ra
 0x29 - SETIC - addr            - pc <= addr                                Set pc to addr
@@ -143,7 +143,7 @@ The processor's instruction set is composed of 46 instructions, split into four 
 0x31 - RET   -                 - pc <= stack[top]                          Return to address on the top of the stack
 ```
 
-####Miscellaneous####
+####Miscellaneous
 ```
 0x3F - HALT  -                 -                                           Suspends processor operation indefinitely
 0x00 - NOP   -                 -                                           Stalls processor operation for one clock cycle
